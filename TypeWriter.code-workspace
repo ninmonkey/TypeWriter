@@ -1,0 +1,32 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "terminal.integrated.fontSize": 13,
+        "editor.fontSize": 13,
+        "[powershell][json][jsonc][markdown]": {
+            "editor.fontSize": 13,
+        },
+        "[powershell]": {
+            "editor.fontSize": 13,
+        },
+        "[markdown]": {
+            "editor.fontSize": 12,
+            "editor.unicodeHighlight.ambiguousCharacters": false,
+            "editor.unicodeHighlight.invisibleCharacters": false,
+            "diffEditor.ignoreTrimWhitespace": false,
+            "editor.wordWrap": "on",
+            "editor.quickSuggestions": {
+                "comments": "off",
+                "strings": "off",
+                "other": "off"
+            },
+            "cSpell.fixSpellingWithRenameProvider": true,
+            "cSpell.advanced.feature.useReferenceProviderWithRename": true,
+            "cSpell.advanced.feature.useReferenceProviderRemove": "/^#+\\s/"
+        },
+    }
+}
