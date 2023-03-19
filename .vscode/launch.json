@@ -7,6 +7,7 @@
             "request": "launch",
             "script": "${workspaceFolder}/debugHarness.ps1",
             "args": [
+                "-NoL",
                 "-NoProfile"
                 // "-TestName",
                 // "Test-Get-All-Users",
@@ -22,10 +23,11 @@
             "name": "[xl🐜] Harness",
             "type": "PowerShell",
             "request": "launch",
-            "script": "${workspaceFolder}/debug_harness.examples.ps1",
+            "script": "${workspaceFolder}/debug_harness.ps1",
             "args": [
-                "-NoProfile"
-                // "-TestName",
+                "-NoL",
+                // "-NoProfile"
+                // "-TestName",''
                 // "Test-Get-All-Users",
             ],
             "cwd": "${workspaceFolder}",
