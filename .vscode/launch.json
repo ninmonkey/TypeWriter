@@ -1,0 +1,109 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "[xl🐜] Harness📌 -NoP",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}/debugHarness.ps1",
+            "args": [
+                "-NoProfile"
+                // "-TestName",
+                // "Test-Get-All-Users",
+            ],
+            "cwd": "${workspaceFolder}",
+            "presentation": {
+                "hidden": false,
+                "group": "c",
+                "order": 1
+            }
+        },
+        {
+            "name": "[xl🐜] Harness",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}/debug_harness.examples.ps1",
+            "args": [
+                "-NoProfile"
+                // "-TestName",
+                // "Test-Get-All-Users",
+            ],
+            "cwd": "${workspaceFolder}",
+            "presentation": {
+                "hidden": false,
+                "group": "a",
+                "order": 1
+            }
+        },
+        {
+            "name": "[xl🐜] New Session",
+            "type": "PowerShell",
+            "request": "launch",
+            "presentation": {
+                "hidden": false,
+                "group": "a",
+                "order": 1
+            },
+            "cwd": "${workspaceFolder}",
+            // "cwd": "${cwd}"
+        },
+        /*
+        {
+            "name": ".NET Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "justMyCode": true,
+            "presentation": {
+                "hidden": false,
+                "group": "z",
+                "order": 1
+            }
+        },
+        {
+            "name": ".NET Classic Attach",
+            "type": "clr",
+            "request": "attach",
+            "justMyCode": true,
+            "presentation": {
+                "hidden": false,
+                "group": "z",
+                "order": 1
+            }
+        },
+        {
+            "name": ".NET Attach (!jmc)",
+            "type": "coreclr",
+            "request": "attach",
+            "justMyCode": false,
+            "presentation": {
+                "hidden": false,
+                "group": "z",
+                "order": 1
+            }
+        },
+        {
+            "name": ".NET Classic Attach (!jmc)",
+            "type": "clr",
+            "request": "attach",
+            "justMyCode": false,
+            "presentation": {
+                "hidden": false,
+                "group": "z",
+                "order": 1
+            }
+        },
+        {
+            "name": "PowerShell Launch Current File",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${file}",
+            "cwd": "${file}",
+            "presentation": {
+                "hidden": false,
+                "group": "z",
+                "order": 1
+            }
+        },
+        */
+    ]
+}
