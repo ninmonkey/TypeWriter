@@ -1,6 +1,9 @@
 $error.Count
 err -Clear -ShowCount
 
+Import-Module '../TypeWriter' -Force
+
+
 $PSStyle.OutputRendering = 'Ansi' # 'Ansi' | 'Host' | 'NoOutput' | 'PlainText'
 # . (gi -ea stop 'Examples/foo.ps1')
 
