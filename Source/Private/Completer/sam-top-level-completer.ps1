@@ -31,20 +31,21 @@ sam build --use-container --parallel --debug --cached --profile Name
 
 '@
 class SamBuildCompletion {
-    [string]$Name
-    [string]$Description
-    [string]$ActualCommand
-    [string]$SomethingElse
+    [string]$completionText = [string]::Empty
+    [string]$listItemText = [string]::Empty
+    [System.Management.Automation.CompletionResultType]$resultType
+    [string]$toolTip = [string]::Empty
+
     SamBuildCompletion(
-        [string]$Name,
-        [string]$Description,
-        [string]$ActualCommand,
-        [string]$SomethingElse
+        [string]$completionText,
+        [string]$listItemText,
+        [System.Management.Automation.CompletionResultType]$resultType,
+        [string]$toolTip
     ) {
-        $this.Name = $Name
-        $this.Description = $Description
-        $this.ActualCommand = $ActualCommand
-        $this.SomethingElse = $SomethingElse
+        $this.completionText = $completionText
+        $this.listItemText = $listItemText
+        $this.resultType = $resultType
+        $this.toolTip = $toolTip
     }
 }
 
@@ -53,21 +54,21 @@ function newSamBuildCompletion {
     # [Alias('newSamBuildCompletion')]
     param(
         [string]$Name,
-        [string]$Description,
-        [string]$ActualCommand,
-        [string]$SomethingElse
+        [string]$listItemText,
+        [System.Management.Automation.CompletionResultType]$resultType,
+        [string]$toolTip
     )
 
     return [SamBuildCompletion]::new(
         $Name,
-        $Description,
-        $ActualCommand,
-        $SomethingElse
+        $listItemText,
+        $resultType,
+        $toolTip
     )
 }
 
 [Collections.Generic.List[Object]]$script:__samCompletions = @(
-   newSamBuildCompletion -Name 'build' -Description 'build the project' -ActualCommand 'sam build' -SomethingElse 'something else'
+   newSamBuildCompletion '--use-container' 'asContainer' ([System.Management.Automation.CompletionResultType]::Command) -toolTip 'Use a container to build your function'
 )
 
 function Register-TypeCompleterCommandSamTopLevel {
