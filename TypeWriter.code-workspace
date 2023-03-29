@@ -5,16 +5,17 @@
         }
     ],
     "settings": {
-        "terminal.integrated.fontSize": 13,
-        "editor.fontSize": 13,
+        "terminal.integrated.fontSize": 16,
+        "editor.fontSize": 16,
         "[powershell][json][jsonc][markdown]": {
             "editor.fontSize": 13,
         },
         "[powershell]": {
-            "editor.fontSize": 13,
+            "editor.fontSize": 16,
         },
         "[markdown]": {
             "editor.fontSize": 12,
+            "editor.fontSize": 14,
             "editor.unicodeHighlight.ambiguousCharacters": false,
             "editor.unicodeHighlight.invisibleCharacters": false,
             "diffEditor.ignoreTrimWhitespace": false,

@@ -2,8 +2,21 @@
 
 ```PipeScript{
 
-gcm -m ExcelAnt | s -First 3 | s -ExcludeProperty 'Definition', 'ScriptBlock'
+### All
+Get-Command -m TypeWriter -ListImported -All
+# | Ft
+| Sort-Object -Unique { $_.Name, $_.Source }
+| Sort-Object Source, Name, CommandType
+| Format-Table -AutoSize
 
+### List Imported
+Get-Command -m TypeWriter -ListImported
+# | Ft
+| Sort-Object -Unique { $_.Name, $_.Source }
+| Sort-Object Source, Name, CommandType
+| Format-Table -AutoSize
+
+}
 ```
 <!-- 
 <insert: generate commands here>
