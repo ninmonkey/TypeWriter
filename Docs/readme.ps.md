@@ -23,3 +23,11 @@ Get-Command -m TypeWriter -ListImported
 - <https://github.com/StartAutomating/PipeScript/blob/main/docs/ListOfTranspilers.md>
 
 -->
+
+## Related Links
+
+- [Working-Argument-Transformations vexx](https://vexx32.github.io/2018/12/13/Working-Argument-Transformations)
+## Related docs
+
+- [Namespace S.M.A.](https://learn.microsoft.com/en-us/dotnet/api/System.Management.Automation?view=powershellsdk-7.0.0)
+- [ArgumentCompletions](https://learn.microsoft.com/en-us/dotnet/api/system.management.automation.argumentcompletionsattribute?view=powershellsdk-7.0.0)

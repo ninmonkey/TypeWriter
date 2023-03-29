@@ -5,10 +5,12 @@
 function Register-TypeCompleterCommandSamTopLevel {
     <#
     .SYNOPSIS
-    wrap completions for Fd Search
+    wrap completions for Sam Top-Level
 
     .DESCRIPTION
-    from <https://github.com/sharkdp/fd#features>
+    from: <https://awscli.amazonaws.com/v2/documentation/api/latest/reference/index.html>
+
+
 
     .EXAMPLE
     An example
@@ -23,8 +25,9 @@ function Register-TypeCompleterCommandSamTopLevel {
 
 }
 
-@'
-important
+$docs = @'
+
+sam build --use-container --parallel --debug --cached --profile Name
 
 '@
 class SamBuildCompletion {
