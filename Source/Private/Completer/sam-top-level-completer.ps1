@@ -31,10 +31,12 @@ sam build --use-container --parallel --debug --cached --profile Name
 
 '@
 class SamBuildCompletion {
+    # wrapper for
     [string]$completionText = [string]::Empty
     [string]$listItemText = [string]::Empty
     [System.Management.Automation.CompletionResultType]$resultType
     [string]$toolTip = [string]::Empty
+    hidden [datetime]$Created
 
     SamBuildCompletion(
         [string]$completionText,
@@ -42,6 +44,7 @@ class SamBuildCompletion {
         [System.Management.Automation.CompletionResultType]$resultType,
         [string]$toolTip
     ) {
+        $this.Created = [datetime]::Now
         $this.completionText = $completionText
         $this.listItemText = $listItemText
         $this.resultType = $resultType
@@ -50,12 +53,36 @@ class SamBuildCompletion {
 }
 
 function newSamBuildCompletion {
+    <#
+    .SYNOPSIS
+        used for creating a new SamBuildCompletion object
+    .notes
+        see internal classes:
+            - [SamBuildCompletion]
+
+        see:
+        - [CompletionResult](https://learn.microsoft.com/en-us/dotnet/api/System.Management.Automation.CompletionResult?view=powershellsdk-7.2.0)
+        - [CompletionResultType](https://learn.microsoft.com/en-us/dotnet/api/system.management.automation.completionresulttype?view=powershellsdk-7.2.0)
+    .EXAMPLE
+    #>
+    [OutputType('System.Management.Automation.CompletionResult', 'SamBuildCompletion')]
     [CmdletBinding()]
     # [Alias('newSamBuildCompletion')]
     param(
+        # pattern
+        [Parameter(Mandatory)]
         [string]$Name,
+
+        # the replacement ?
+        [Parameter(Mandatory)]
         [string]$listItemText,
+
+        # the type of completion
+        [Parameter(Mandatory)]
         [System.Management.Automation.CompletionResultType]$resultType,
+
+        # the tooltip for menuCompletions
+        [Parameter(Mandatory)]
         [string]$toolTip
     )
 
@@ -67,9 +94,32 @@ function newSamBuildCompletion {
     )
 }
 
-[Collections.Generic.List[Object]]$script:__samCompletions = @(
-   newSamBuildCompletion '--use-container' 'asContainer' ([System.Management.Automation.CompletionResultType]::Command) -toolTip 'Use a container to build your function'
+[Collections.Generic.List[Object]]$script:__samCompletions = @()
+
+[Collections.Generic.List[Object]]$script:__testCompletions = @(
+    # [StyleA] test alternate invocations
+    newSamBuildCompletion '--use-container' 'asContainer' ([System.Management.Automation.CompletionResultType]::Command) -toolTip 'Use a container to build your function'
+
+    # [StyleB] test alternate invocations
+    $newSamBuildCompletionSplat = @{
+        Name         = '--use-container'
+        listItemText = 'asContainer'
+        resultType   = [System.Management.Automation.CompletionResultType]::Command
+        toolTip      = 'Use a container to build your function'
+    }
+    newSamBuildCompletion @newSamBuildCompletionSplat
+
+    # [StyleC] test alternate invocations, requires a new parameter
+    <#
+    newSamBuildCompletion @(
+        '--use-container'
+        'asContainer'
+        [System.Management.Automation.CompletionResultType]::Command
+        'Use a container to build your function'
+    )
+    #>
 )
+$script:__testCompletions | Format-Table -auto
 
 function Register-TypeCompleterCommandSamTopLevel {
 
@@ -77,4 +127,3 @@ function Register-TypeCompleterCommandSamTopLevel {
 
 
 'show'
-$script:__samCompletions | Ft -auto

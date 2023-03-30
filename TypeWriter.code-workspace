@@ -6,12 +6,14 @@
     ],
     "settings": {
         "terminal.integrated.fontSize": 16,
+        "terminal.integrated.fontSize": 14,
         "editor.fontSize": 16,
         "[powershell][json][jsonc][markdown]": {
             "editor.fontSize": 13,
         },
         "[powershell]": {
             "editor.fontSize": 16,
+            "editor.fontSize": 14,
         },
         "[markdown]": {
             "editor.fontSize": 12,
