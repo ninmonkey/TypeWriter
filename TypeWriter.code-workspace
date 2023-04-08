@@ -5,6 +5,53 @@
         }
     ],
     "settings": {
+        "explorer.fileNesting.enabled": true,
+        "explorer.fileNesting.patterns": {
+            // "LICENSE": ".gitignore",
+            // // "LICENSE": "Docs/cli/readme.md"
+            // "Docs/readme.md": "LICENSE"
+            // "*.psd1": "${capture}.psm1"
+            // EBTI explicit better than implicit, and smaller patterns for less problems
+            "*.ps.md": "${capture}.md",
+            // "*.ps.psd1": "${capture}.psd1",
+            "*.ps.psd1": "${capture}.psd1, ${capture}.psm1",
+            "*.ps.psm1": "${capture}.psm1",
+            "*.ps.svg": "${capture}.svg",
+            "*.ps.js": "${capture}.ps1",
+            "*.ps.ts": "${capture}.ts",
+            "*.ps.html": "${capture}.html",
+            "*.psd1": "${capture}.format.ps1xml, ${capture}.types.ps1xml",
+            ".gitignore": ".gitattributes",
+        },
+        /*
+${capture}: Matches the resolved value of the * from the parent pattern
+${basename}: Matches the parent file's basename, the file in file.ts
+${extname}: Matches the parent file's extension, the ts in file.ts
+${dirname}: Matches the parent file's directory name, the src in src/file.ts
+*: Matches any string, may only be used once per child pattern
+    // */
+        //         "*.ps.psd1": "*p.ps1xml",
+        //         "*.ps.psd1": "*.ps1xml",
+        //         "*.ps.psd1": "${capture}.ps1xml"
+        // Cargo.toml": "Cargo.lock"
+        /*
+- [default settings](https://code.visualstudio.com/docs/getstarted/settings)
+    tke effect. Each __Item__ represents a parent pattern and may contain a single `*` character that matches any string. Each __Value__ represents a comma separated list of the child patterns that should be shown nested under a given parent. Child patterns may contain several special tokens:
+    // - `${capture}`: Matches the resolved value of the `*` from the parent pattern
+    // - `${basename}`: Matches the parent file's basename, the `file` in `file.ts`
+    // - `${extname}`: Matches the parent file's extension, the `ts` in `file.ts`
+    // - `${dirname}`: Matches the parent file's directory name, the `src` in `src/file.ts`
+    // - `*`:  Matches any string, may only be used once per child pattern
+
+    "explorer.fileNesting.patterns": {
+        "*.ts": "${capture}.js",
+        "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+        "*.jsx": "${capture}.js",
+        "*.tsx": "${capture}.ts",
+        "tsconfig.json": "tsconfig.*.json",
+        "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml"
+    */
+        // "*.psd1": "${capture}.psm1",
         "terminal.integrated.fontSize": 16,
         "terminal.integrated.fontSize": 14,
         "editor.fontSize": 16,
