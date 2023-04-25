@@ -10,18 +10,18 @@
             // "LICENSE": ".gitignore",
             // // "LICENSE": "Docs/cli/readme.md"
             // "Docs/readme.md": "LICENSE"
-            // "*.psd1": "${capture}.psm1"
-            // EBTI explicit better than implicit, and smaller patterns for less problems
-            "*.ps.md": "${capture}.md",
-            // "*.ps.psd1": "${capture}.psd1",
-            "*.ps.psd1": "${capture}.psd1, ${capture}.psm1",
-            "*.ps.psm1": "${capture}.psm1",
-            "*.ps.svg": "${capture}.svg",
-            "*.ps.js": "${capture}.ps1",
-            "*.ps.ts": "${capture}.ts",
-            "*.ps.html": "${capture}.html",
-            "*.psd1": "${capture}.format.ps1xml, ${capture}.types.ps1xml",
-            ".gitignore": ".gitattributes",
+            // // "*.psd1": "${capture}.psm1"
+            // // EBTI explicit better than implicit, and smaller patterns for less problems
+            // "*.ps.md": "${capture}.md",
+            // // "*.ps.psd1": "${capture}.psd1",
+            // "*.ps.psd1": "${capture}.psd1, ${capture}.psm1",
+            // "*.ps.psm1": "${capture}.psm1",
+            // "*.ps.svg": "${capture}.svg",
+            // "*.ps.js": "${capture}.ps1",
+            // "*.ps.ts": "${capture}.ts",
+            // "*.ps.html": "${capture}.html",
+            // "*.psd1": "${capture}.format.ps1xml, ${capture}.types.ps1xml",
+            // ".gitignore": ".gitattributes",
         },
         /*
 ${capture}: Matches the resolved value of the * from the parent pattern

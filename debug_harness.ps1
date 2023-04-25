@@ -45,7 +45,13 @@ Get-Command -m TypeWriter -ListImported
 | Format-Table -AutoSize
 
 
+<# see?
+    <file:///H:\data\2023\pwsh\PsModules\TypeWriter\Source\Private\Completer\sam-top-level-completer.ps1>
+    <file:///H:\data\2023\pwsh\PsModules\TypeWriter\debug_harness.ps1>
+
+therefore
 . 'H:\data\2023\pwsh\PsModules\TypeWriter\Source\Private\Completer\sam-top-level-completer.ps1'
+#>
 
 
 

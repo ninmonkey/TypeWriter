@@ -42,6 +42,7 @@ function newEventRecord {
 # write-warning 'cheat for now on the export rules filtering, I am not yet sure which pattern I prefer'
 Foreach($FolderItem in 'Private','Public') {
     # [Collections.Generic.List[Object]]$ImportItemList = Get-ChildItem -Path $PSScriptRoot\$FolderItem\*.ps1 -ErrorAction SilentlyContinue
+    # verbose # warning, better than this
     $getChildItemSplat = @{
         Path = "$PSScriptRoot\$FolderItem\*.ps1"
         # ErrorAction = 'SilentlyContinue'
@@ -89,8 +90,8 @@ Foreach($FolderItem in 'Private','Public') {
 }
 
 if ($__buildCfg.LoadTypeAndFormatdata) {
-    Update-FormatData -PrependPath (Join-Path $PSScriptRoot 'ExcelAnt.format.ps1xml' )
-    Update-TypeData -PrependPath (Join-Path $PSScriptRoot 'ExcelAnt.types.ps1xml' ) -ErrorAction Ignore
+    Update-FormatData -PrependPath (Join-Path $PSScriptRoot 'TypeWriter.format.ps1xml' )
+    Update-TypeData -PrependPath (Join-Path $PSScriptRoot 'TypeWriter.types.ps1xml' ) -ErrorAction Ignore
 }
 # }
 # Export-ModuleMember -Cmdlet Find-Type, Find-Member, Format-MemberSignature, Get-Assembly, Get-Parameter -Alias *

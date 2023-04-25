@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../client_bdg/2023.03.17-bdg/core/src/pass1/lab-lambda-runtime/examples/demo-runtime-layer-function"
+		},
+		{
+			"path": "../../../../../client_bdg/2023.03.17-bdg/core/src/pass1/lab-lambda-runtime"
+		}
+	],
+    "settings": {}
+}

@@ -10,8 +10,6 @@ function Register-TypeCompleterCommandSamTopLevel {
     .DESCRIPTION
     from: <https://awscli.amazonaws.com/v2/documentation/api/latest/reference/index.html>
 
-
-
     .EXAMPLE
     An example
 
