@@ -78,5 +78,25 @@ ${dirname}: Matches the parent file's directory name, the src in src/file.ts
             "cSpell.advanced.feature.useReferenceProviderWithRename": true,
             "cSpell.advanced.feature.useReferenceProviderRemove": "/^#+\\s/"
         },
+        "workbench.colorCustomizations": {
+            "activityBar.activeBackground": "#70e592",
+            "activityBar.background": "#70e592",
+            "activityBar.foreground": "#15202b",
+            "activityBar.inactiveForeground": "#15202b99",
+            "activityBarBadge.background": "#9878e6",
+            "activityBarBadge.foreground": "#15202b",
+            "commandCenter.border": "#15202b99",
+            "sash.hoverBorder": "#70e592",
+            "statusBar.background": "#45dd71",
+            "statusBar.foreground": "#15202b",
+            "statusBarItem.hoverBackground": "#25ca55",
+            "statusBarItem.remoteBackground": "#45dd71",
+            "statusBarItem.remoteForeground": "#15202b",
+            "titleBar.activeBackground": "#45dd71",
+            "titleBar.activeForeground": "#15202b",
+            "titleBar.inactiveBackground": "#45dd7199",
+            "titleBar.inactiveForeground": "#15202b99"
+        },
+        "peacock.color": "#45dd71",
     }
 }

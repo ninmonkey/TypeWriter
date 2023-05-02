@@ -1,4 +1,4 @@
-$Error.Clear() # 2023-04-03
+# $Error.Clear() # 2023-04-03
 function __build.Main {
     $VerbosePreference = 'continue'
     $results = .\PowerShellGuide.Build.ps1 | CountOf 'buildModule'

@@ -1,3 +1,6 @@
+```ps1
+Pwsh> sam --help
+
  Examples
   --------
   To use this command, update your SAM template to specify the path
@@ -311,3 +314,4 @@ Options:
                                   east-1).
 
   -h, --help                      Show this message and exit.
+```
