@@ -23,6 +23,86 @@ function Register-TypeCompleterCommandPowerQueryTopLevel {
 $docs = @'
 '@
 
+function tw.Help-PowerQueryCommands {
+    tw.Find-PowerQueryCommands | Select-Object -First 1 | Goto
+
+    $which = Get-Command -CommandType Application './PQTest'
+    h1 $Which
+    & $Which --helpf
+    Hr
+
+
+
+    Write-Warning 'early exit because some are services, not all are safe to invoke help on'
+    return
+
+    $which = Get-Command -CommandType Application './Microsoft.Mashup.Container.NetFX45.exe' -ea 'ignore' | Select-Object -First 1
+
+    if ($which) {
+        h1 $Which
+        & $Which --help
+        Hr
+    }
+
+    $which = Get-Command -CommandType Application './PQTest.exe' -ea 'ignore' | Select-Object -First 1
+
+    if ($which) {
+        h1 $Which
+        & $Which --help
+        Hr
+    }
+
+    $which = Get-Command -CommandType Application './Microsoft.Mashup.Container.NetFX40.exe' -ea 'ignore' | Select-Object -First 1
+
+    if ($which) {
+        h1 $Which
+        & $Which --help
+        Hr
+    }
+
+    $which = Get-Command -CommandType Application './Microsoft.Mashup.Container.Loader.exe' -ea 'ignore' | Select-Object -First 1
+
+    if ($which) {
+        h1 $Which
+        & $Which --help
+        Hr
+    }
+
+    $which = Get-Command -CommandType Application './Microsoft.Mashup.Container.exe' -ea 'ignore' | Select-Object -First 1
+
+    if ($which) {
+        h1 $Which
+        & $Which --help
+        Hr
+    }
+
+    $which = Get-Command -CommandType Application './PQServiceHost.exe' -ea 'ignore' | Select-Object -First 1
+
+    if ($which) {
+        h1 $Which
+        & $Which --help
+        Hr
+    }
+
+    $which = Get-Command -CommandType Application './MakePQX.exe' -ea 'ignore' | Select-Object -First 1
+
+    if ($which) {
+        h1 $Which
+        & $Which --help
+        Hr
+    }
+
+    $which = Get-Command -CommandType Application './ConnectorInfo.exe' -ea 'ignore' | Select-Object -First 1
+
+    if ($which) {
+        h1 $Which
+        & $Which --help
+        Hr
+    }
+
+}
+
+
 function tw.Find-PowerQueryCommands {
     [CmdletBinding()]
     param(
@@ -72,7 +152,6 @@ function tw.Find-PowerQueryCommands {
     )
 }
 
-tw.Find-PowerQueryCommands
 
 class PowerQueryBuildCompletion {
     # wrapper for
@@ -168,3 +247,6 @@ $script:__testCompletions | Format-Table -auto
 function Register-TypeCompleterCommandPowerQueryTopLevel {
 
 }
+
+tw.Find-PowerQueryCommands
+tw.Help-PowerQueryCommands

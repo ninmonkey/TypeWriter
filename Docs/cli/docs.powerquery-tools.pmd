@@ -1,0 +1,139 @@
+- [Merged notes](#merged-notes)
+- [`PQTest.exe` Top](#pqtestexe-top)
+  - [`PQTest.exe info`](#pqtestexe-info)
+  - [`PQTest.exe credential-template`](#pqtestexe-credential-template)
+  - [`PQTest.exe info`](#pqtestexe-info-1)
+  - [`PQTest.exe info`](#pqtestexe-info-2)
+  - [`PQTest.exe info`](#pqtestexe-info-3)
+  - [`PQTest.exe info`](#pqtestexe-info-4)
+  - [`PQTest.exe info`](#pqtestexe-info-5)
+  - [`PQTest.exe info`](#pqtestexe-info-6)
+- [`ConnectorInfo.exe` Top](#connectorinfoexe-top)
+
+
+## Merged notes
+
+Taken from:
+```ps1
+$Paths = @{ ExtensionsRoot = Join-Path $Env:UserProfile '.vscode/extensions' }
+$Paths.PqDirs = Get-ChildItem -Path $Paths.ExtensionsRoot -Filter '*vscode-powerquery*'
+
+$Paths.NewestPqWithoutSDK = Get-ChildItem -Path $paths.ExtensionsRoot -Filter '*power*query*'
+    | Where-Object FullName -NotMatch '-sdk-'
+    | Sort-Object LastWriteTIme -Descending -Top 1
+
+$Paths.NewestPqSdk = Get-ChildItem -Path $paths.ExtensionsRoot -Filter '*power*query*'
+    | Where-Object FullName -Match '-sdk-'
+    | Sort-Object LastWriteTIme -Descending -Top 1
+```
+
+## `PQTest.exe` Top
+
+```ps1
+
+
+Usage: PQTest [options] [command]
+
+Options:
+  -e | --extension                       Connector extension source
+  -p | --prettyPrint                     Format JSON results
+  -ecf | --environmentConfigurationFile  Path to environment configuration settings file
+  -ec | --environmentConfiguration       Individual environment configuration setting (key=value format)
+  -apf | --applicationPropertyFile       Path to application properties file
+  -ap | --applicationProperty            Individual application property setting (key=value format)
+  -? | -h | --help                       Show help information
+
+Commands:
+  credential-template  Generate a json credential template.
+  delete-credential    Deletes credentials from the current credential store.
+  discover             Runs data source discovery for a given expression.
+  info                 Returns all module information.
+  list-credential      Lists credentials saved in the credential store.
+  oauth                Displays OAuth client information for a given expression or data source.
+  refresh-credential   Refresh OAuth credential.
+  run-test             Runs tests in specified file or folder.
+  set-credential       Set credential from JSON template using piped input, or run with --interactive
+  test-connection      Runs the TestConnection query for the provided expression.
+  validate             Validates the connector's TestConnection implementation.
+
+Use "PQTest [command] --help" for more information about a command.
+```
+
+### `PQTest.exe info` 
+
+```ps1
+Usage: PQTest info [options]
+
+Options:
+  -? | -h | --help                       Show help information
+  -e | --extension                       Connector extension source
+  -p | --prettyPrint                     Format JSON results
+  -ecf | --environmentConfigurationFile  Path to environment configuration settings file
+  -ec | --environmentConfiguration       Individual environment configuration setting (key=value format)
+  -apf | --applicationPropertyFile       Path to application properties file
+  -ap | --applicationProperty            Individual application property setting (key=value format)
+```
+
+### `PQTest.exe credential-template` 
+```ps1
+
+
+Usage: PQTest credential-template [options]
+
+Options:
+  -? | -h | --help                       Show help information
+  -q | --queryFile                       Query file containing M expression (.m/.pq)
+  -dsk | --dataSourceKind                Data source kind
+  -dsp | --dataSourcePath                Data source path
+  -ak | --authenticationKind             Specify the authentication kind (Anonymous, UsernamePassword, Key, Windows, OAuth2)
+  -e | --extension                       Connector extension source
+  -p | --prettyPrint                     Format JSON results
+  -ecf | --environmentConfigurationFile  Path to environment configuration settings file
+  -ec | --environmentConfiguration       Individual environment configuration setting (key=value format)
+  -apf | --applicationPropertyFile       Path to application properties file
+  -ap | --applicationProperty            Individual application property setting (key=value format)
+
+```
+### `PQTest.exe info` 
+```ps1
+```
+### `PQTest.exe info` 
+```ps1
+```
+### `PQTest.exe info` 
+```ps1
+```
+### `PQTest.exe info` 
+```ps1
+```
+### `PQTest.exe info` 
+```ps1
+```
+### `PQTest.exe info` 
+```ps1
+```
+
+
+## `ConnectorInfo.exe` Top
+
+```ps1
+.\ConnectorInfo.exe --help
+
+
+Usage: ConnectorInfo [arguments] [options] [command]
+
+Arguments:
+  Connector file   Full path to connector (.mez/.pqx)
+  Expression file  Full path to a file containing an M expression (.m/.pq)
+
+Options:
+  -?  | -h | --help  Show help information
+
+Commands:
+  dsr      Extracts DSR from expression..
+  kind     Returns data source kind information.
+  module   Returns the module name or an error if missing.
+  version  Returns module version information or an error if missing.
+
+Use "ConnectorInfo [command] --help" for more information about a command.
+```
