@@ -24,61 +24,55 @@ $docs = @'
 '@
 
 function tw.Find-PowerQueryCommands {
+    [CmdletBinding()]
+    param(
+        # I am not sure whether the non-extension binaries are of interest if the
+        # SDK is installed, however, they are separate for now.
+        [switch]$IncludeNonSDK
+    )
+    Write-Warning 'IncludeNonSDK not including doubles yet, correctly'
     # are any others interesting?
+    $Config = @{
+        OnlyVersionSdk = $false
+    }
+    if ($IncludeNonSDK) {
+        $Config.OnlyVersionSdk = $true
+    }
     $Paths = @{
         ExtensionsRoot = Join-Path $Env:UserProfile '.vscode/extensions'
     }
-    $Paths.PqDirs = Get-ChildItem -Path $Paths.ExtensionsRoot *vscode-powerquery*
+    $Paths.PqDirs = Get-ChildItem -Path $Paths.ExtensionsRoot -Filter '*vscode-powerquery*'
 
-
-
-    $newestPqSdk = Get-ChildItem -Path (Join-Path $Env:UserProfile '.vscode')
-
-    Get-ChildItem $paths.ExtensionsRoot
-
-    $Paths.NewestPqSDK = ''
-    $Paths.NewestPqWithoutSDK = ''
-
-    # $script:__cachedQuery
-
-    Get-ChildItem -Path $Paths.ExtensionsRoot -Filter '*power*query*'
-
-    $Paths.ExtensionsRoot
-
-    $Paths.NewestPqWithoutSDK = Get-ChildItem -Path $paths.ExtensionsRoot *power*query*
+    $Paths.NewestPqWithoutSDK = Get-ChildItem -Path $paths.ExtensionsRoot -Filter '*power*query*'
     | Where-Object FullName -NotMatch '-sdk-'
     | Sort-Object LastWriteTIme -Descending -Top 1
 
-    $Paths.NewestPqSdk = Get-ChildItem -Path $paths.ExtensionsRoot *power*query*
+    $Paths.NewestPqSdk = Get-ChildItem -Path $paths.ExtensionsRoot -Filter '*power*query*'
     | Where-Object FullName -Match '-sdk-'
     | Sort-Object LastWriteTIme -Descending -Top 1
 
+    $getChildItemSplat = @{
+        Path    = @(
+            $Paths.NewestPqSDK
+            if (-not $Config.OnlyVersionSdk) {
+                $paths.NewestPqWithoutSDK
+            }
+        )
+        Recurse = $true
+        Filter  = '*.exe'
+    }
 
-    return
-
-    $newestRoot = Get-ChildItem 'C:\Users\cppmo_000\.vscode\extensions\powerquery.vscode-powerquery-sdk*'
-    | Sort-Object LastWriteTime -Descending
-    | Select-Object -First 1
-
-    $newestPqSdk = Get-ChildItem -Path $Paths.ExtensionsRoot *power*query*
-    | Where-Object Name -Match 'powerquery.vscode-powerquery'
-    | Where-Object -Not -Match '-sdk-'
-    | Sort-Object LastWriteTime -Descending -Top 1
-
-    $newestPqSdk = Get-ChildItem -Path $Paths.ExtensionsRoot *power*query*
-    | Where-Object Name -Match 'powerquery.vscode-powerquery-sdk'
-    | Sort-Object LastWriteTime -Descending -Top 1
-
-
-    $extensionsRoot = Join-Path $Env:UserProfile '.vscode/extensions'
 
     (
-        $script:__cachedQuery ??= Get-ChildItem -Path $extensionsRoot *.exe -Recurse
+        $script:__cachedQuery = Get-ChildItem @getChildItemSplat -File
         | Where-Object { $_.FullName -match 'powerquery.vscode-powerquery-sdk' }
-        | Sort-Object LastWriteTime, Directory, Name -Descending
+        | Sort-Object Directory, LastWriteTime, Name -Descending
+        # | Sort-Object LastWriteTime, Directory, Name -Descending
         # | Sort-Object LastWriteTime -Descending
     )
 }
+
+tw.Find-PowerQueryCommands
 
 class PowerQueryBuildCompletion {
     # wrapper for
