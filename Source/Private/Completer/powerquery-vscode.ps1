@@ -27,7 +27,7 @@ function tw.Help-PowerQueryCommands {
     tw.Find-PowerQueryCommands | Select-Object -First 1 | Goto
 
     $which = Get-Command -CommandType Application './PQTest'
-    h1 $Which
+    H1 $Which
     & $Which --helpf
     Hr
 
@@ -39,7 +39,7 @@ function tw.Help-PowerQueryCommands {
     $which = Get-Command -CommandType Application './Microsoft.Mashup.Container.NetFX45.exe' -ea 'ignore' | Select-Object -First 1
 
     if ($which) {
-        h1 $Which
+        H1 $Which
         & $Which --help
         Hr
     }
@@ -47,7 +47,7 @@ function tw.Help-PowerQueryCommands {
     $which = Get-Command -CommandType Application './PQTest.exe' -ea 'ignore' | Select-Object -First 1
 
     if ($which) {
-        h1 $Which
+        H1 $Which
         & $Which --help
         Hr
     }
@@ -55,7 +55,7 @@ function tw.Help-PowerQueryCommands {
     $which = Get-Command -CommandType Application './Microsoft.Mashup.Container.NetFX40.exe' -ea 'ignore' | Select-Object -First 1
 
     if ($which) {
-        h1 $Which
+        H1 $Which
         & $Which --help
         Hr
     }
@@ -63,7 +63,7 @@ function tw.Help-PowerQueryCommands {
     $which = Get-Command -CommandType Application './Microsoft.Mashup.Container.Loader.exe' -ea 'ignore' | Select-Object -First 1
 
     if ($which) {
-        h1 $Which
+        H1 $Which
         & $Which --help
         Hr
     }
@@ -71,7 +71,7 @@ function tw.Help-PowerQueryCommands {
     $which = Get-Command -CommandType Application './Microsoft.Mashup.Container.exe' -ea 'ignore' | Select-Object -First 1
 
     if ($which) {
-        h1 $Which
+        H1 $Which
         & $Which --help
         Hr
     }
@@ -79,7 +79,7 @@ function tw.Help-PowerQueryCommands {
     $which = Get-Command -CommandType Application './PQServiceHost.exe' -ea 'ignore' | Select-Object -First 1
 
     if ($which) {
-        h1 $Which
+        H1 $Which
         & $Which --help
         Hr
     }
@@ -87,7 +87,7 @@ function tw.Help-PowerQueryCommands {
     $which = Get-Command -CommandType Application './MakePQX.exe' -ea 'ignore' | Select-Object -First 1
 
     if ($which) {
-        h1 $Which
+        H1 $Which
         & $Which --help
         Hr
     }
@@ -95,7 +95,7 @@ function tw.Help-PowerQueryCommands {
     $which = Get-Command -CommandType Application './ConnectorInfo.exe' -ea 'ignore' | Select-Object -First 1
 
     if ($which) {
-        h1 $Which
+        H1 $Which
         & $Which --help
         Hr
     }
@@ -106,6 +106,8 @@ function tw.Help-PowerQueryCommands {
 function tw.Find-PowerQueryCommands {
     [CmdletBinding()]
     param(
+        # name to search
+        [string]$CommandName,
         # I am not sure whether the non-extension binaries are of interest if the
         # SDK is installed, however, they are separate for now.
         [switch]$IncludeNonSDK
@@ -143,13 +145,22 @@ function tw.Find-PowerQueryCommands {
     }
 
 
-    (
-        $script:__cachedQuery = Get-ChildItem @getChildItemSplat -File
-        | Where-Object { $_.FullName -match 'powerquery.vscode-powerquery-sdk' }
-        | Sort-Object Directory, LastWriteTime, Name -Descending
-        # | Sort-Object LastWriteTime, Directory, Name -Descending
-        # | Sort-Object LastWriteTime -Descending
-    )
+
+    $script:__cachedQuery = Get-ChildItem @getChildItemSplat -File
+    | Where-Object { $_.FullName -match 'powerquery.vscode-powerquery-sdk' }
+    | Sort-Object Directory, LastWriteTime, Name -Descending
+    # | Sort-Object LastWriteTime, Directory, Name -Descending
+    # | Sort-Object LastWriteTime -Descending
+
+    if ($CommandName) {
+        $filtered = $script:__cachedQuery | Where-Object Name -Match $CommandName
+        if ($filtered.count -gt 1) {
+            Write-Error -ea 'stop' "InvalidQueryResult: '$Command' failed query OneOrNone"
+        }
+        return $CommandName
+    }
+    return $script:__cachedQuery
+
 }
 
 
