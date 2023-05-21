@@ -99,5 +99,16 @@ ${dirname}: Matches the parent file's directory name, the src in src/file.ts
             "titleBar.inactiveForeground": "#15202b99"
         },
         "peacock.color": "#45dd71",
+        "search.exclude": {
+            // "Output/*": true,
+            // "**/*.psm1": true,
+            "Output/**": true,
+            "Output": true,
+            "**/node_modules": true,
+            "**/bower_components": true,
+            "**/*.code-search": true
+        },
+        "search.useParentIgnoreFiles": true,
+
     }
 }
