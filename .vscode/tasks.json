@@ -59,7 +59,8 @@
             },
             // Try start the task on folder open
             "runOptions": {
-                "runOn": "folderOpen"
+                // "runOn": "folderOpen"
+                "runOn": "default"
                 // "runOn": "folderOpen"
             }
         },
@@ -68,6 +69,9 @@
             "label": "FirstBuildItBg",
             // The task will launch a shell
             "type": "shell",
+            "runOptions": {
+                "runOn": "default"
+            },
             "command": {
                 "quoting": "strong",
                 "value": [
@@ -77,6 +81,7 @@
                     // ""./Source/build.psd1"
                     // "ls ./Source"
                 ],
+
             },
             // Set the shell type
             "options": {
@@ -93,6 +98,7 @@
             },
             // Mark as a background task to avoid the spinner animation on the terminal tab
             "isBackground": true,
+            "isBackground": false,
             "problemMatcher": [],
             // Create the tasks in a terminal group
             "presentation": {
@@ -109,7 +115,7 @@
                     "args": []
                 }
             },
-            "isBackground": true,
+            "isBackground": false,
             "problemMatcher": [],
             "presentation": {
                 "group": "my-group"
@@ -128,7 +134,7 @@
             },
             // Try start the task on folder open
             "runOptions": {
-                "runOn": "folderOpen"
+                // "runOn": "folderOpen"
             }
         },
         {
@@ -166,6 +172,10 @@
                     "executable": "pwsh.exe",
                     "args": []
                 }
+
+            },
+            "runOptions": {
+                "runOn": "default"
             },
             "isBackground": true,
             "problemMatcher": [],
