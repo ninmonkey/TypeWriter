@@ -1,6 +1,8 @@
+$script:______originalRootPath = gi .
+
 $__buildCfg = @{
     LoadTypeAndFormatdata = $false
-    LooseFunctionImports = $true
+    LooseFunctionImports  = $true
 }
 $script:__moduleInfo = @{
     Files = [Collections.Generic.List[Object]]::new()
@@ -13,10 +15,10 @@ function newEventRecord {
     # not literal events
     [OutputTYpe('newModuleEvent')]
     param(
-        [Parameter(Mandatory, Position=0)]
+        [Parameter(Mandatory, Position = 0)]
         [string]$Label,
 
-        [Parameter(Mandatory, Position=1)]
+        [Parameter(Mandatory, Position = 1)]
         [object]$Data
     )
 
@@ -40,11 +42,11 @@ function newEventRecord {
 
 # }
 # write-warning 'cheat for now on the export rules filtering, I am not yet sure which pattern I prefer'
-Foreach($FolderItem in 'Private','Public') {
+Foreach ($FolderItem in 'Private', 'Public') {
     # [Collections.Generic.List[Object]]$ImportItemList = Get-ChildItem -Path $PSScriptRoot\$FolderItem\*.ps1 -ErrorAction SilentlyContinue
     # verbose # warning, better than this
     $getChildItemSplat = @{
-        Path = "$PSScriptRoot\$FolderItem\*.ps1"
+        Path    = "$PSScriptRoot\$FolderItem\*.ps1"
         # ErrorAction = 'SilentlyContinue'
         Recurse = $true
     }
@@ -55,7 +57,7 @@ Foreach($FolderItem in 'Private','Public') {
     #     $ImportItemList | nin.AddProp -Name 'Stage' -Value '0_all'
     # )
 
-    Foreach($ImportItem in $ImportItemList) {
+    Foreach ($ImportItem in $ImportItemList) {
         Try {
             . $ImportItem
         }
@@ -78,10 +80,10 @@ Foreach($FolderItem in 'Private','Public') {
             }
         )
         $ToExport | Join-String -sep ', ' -single -op 'ToExport = @( ' -os ' )'
-        | write-verbose
+        | Write-Verbose
 
         $ToExport.AddRange( $hardcodedToExportFunc )
-        | sort -unique
+        | sort -Unique
 
         Export-ModuleMember -Function @(
             $ToExport
@@ -95,3 +97,5 @@ if ($__buildCfg.LoadTypeAndFormatdata) {
 }
 # }
 # Export-ModuleMember -Cmdlet Find-Type, Find-Member, Format-MemberSignature, Get-Assembly, Get-Parameter -Alias *
+
+pushd $script:______originalRootPath
