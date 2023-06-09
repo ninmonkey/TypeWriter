@@ -24,5 +24,36 @@ function Register-TypeCompleterCommandFdFind {
 }
 
 function Register-TypeCompleterCommandFdFind {
+    $fd = {
+        param($wordToComplete, $commandAst, $cursorPosition)
+        # dotnet complete --position $cursorPosition $commandAst.ToString()
+        # | ForEach-Object {
+        @(
+
+            [System.Management.Automation.CompletionResult]::new(
+                '--paging',
+                '--paging',
+                'ParameterName',
+                '--paging'
+            )
+            # [System.Management.Automation.CompletionResult]::new(
+            #     'always',
+            #     'always',
+            #     'ParameterValue',
+            #     'always'
+            # )
+            [System.Management.Automation.CompletionResult]::new(
+                '--strip-cwd-prefix',
+                '--strip-cwd-prefix',
+                'ParameterName',
+                'By default, relative paths are prefixed with ''./'' when the output goes to a non interactive terminal
+            (TTY). Use this flag to disable this behaviour.'
+            )
+        )
+
+        # }
+    }
+    Register-ArgumentCompleter -Native -CommandName 'fd' -ScriptBlock $fd
 
 }
+
