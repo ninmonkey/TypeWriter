@@ -24,15 +24,18 @@ $docs = @'
 '@
 
 function tw.Help-PowerQueryCommands {
-    tw.Find-PowerQueryCommands | Select-Object -First 1 | Goto
+    # $one = tw.Find-PowerQueryCommands | Select-Object -First 1
+    $one =
+        tw.Find-PowerQueryCommands | Select-Object -First 1
+            | % Directory | % Fullname
+    # | Goto
 
+    pushd -StackName 'PqCmds' $One
     $which = Get-Command -CommandType Application './PQTest'
     H1 $Which
-    & $Which --helpf
+    & $Which --help
     Hr
-
-
-
+    popd -StackName 'PqCmds'
     Write-Warning 'early exit because some are services, not all are safe to invoke help on'
     return
 
@@ -259,5 +262,9 @@ function Register-TypeCompleterCommandPowerQueryTopLevel {
 
 }
 
-tw.Find-PowerQueryCommands
-tw.Help-PowerQueryCommands
+@'
+try:
+
+    tw.Find-PowerQueryCommands
+    tw.Help-PowerQueryCommands
+'@ | write-verbose

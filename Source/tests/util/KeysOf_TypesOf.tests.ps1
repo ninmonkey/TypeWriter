@@ -8,16 +8,16 @@ BeforeAll {
     # . (Get-Item $Self) -ea stop
 }
 
-Describe 'xa.Object.KeysOf' {
+Describe 'tw.Object.KeysOf' {
     BeforeAll {
         $Sample = @{
             Hash = @{ a = 1; z = 100 ; b = 4 }
         }
         It 'KeysInOrder' {
-            $Names = $Sample.Hash | xa.KeysOf
+            $Names = $Sample.Hash | tw.KeysOf
             $expected = $Sample.Hash.Keys.Clone() | Sort-Object
 
-            $Sample.Hash | xa.KeysOf
+            $Sample.Hash | tw.KeysOf
             | Should -BeExactly $expected
         }
     }
@@ -29,7 +29,7 @@ Describe 'xa.Object.KeysOf' {
         coerce.ToFileInfo -InputObject $Pkg.File | Should -BeOfType 'IO.FileInfo' # more specifically
     }
 }
-Describe 'xa.Object.NameOf' {
+Describe 'tw.Object.NameOf' {
     BeforeAll {
         $Sample = @{
             Hash          = @{ a = 10 ; b = 50 }
@@ -46,16 +46,16 @@ Describe 'xa.Object.NameOf' {
         $Expected = @('Name'
         'Attributes',  'BaseName',  'CreationTime',  'CreationTimeUtc',  'Directory',  'DirectoryName',  'Exists',  'Extension',  'FullName',  'IsReadOnly',  'LastAccessTime',  'LastAccessTimeUtc',  'LastWriteTime',  'LastWriteTimeUtc',  'Length',  'LinkTarget',  'LinkType',  'Mode',  'ModeWithoutHardLink',  'Name',  'PSChildName',  'PSDrive',  'PSIsContainer',  'PSParentPath',  'PSPath',  'PSProvider',  'ResolvedTarget',  'Target',  'UnixFileMode',  'VersionInfo')
         #| Should -BeExactly 'KeysOf_TypesOf.tests.ps1'
-        $Sample.File1 | xa.keysOf
+        $Sample.File1 | tw.keysOf
         | Should -BeIn $Expected
     }
     it 'TypeOf [FileInfo]' {
 
-        $Sample.File2 | xa.TypeOf | Should -Match 'FileInfo'
-        (Get-Item .) | xa.TypeOf | Should -Match 'directoryinfo'
+        $Sample.File2 | tw.TypeOf | Should -Match 'FileInfo'
+        (Get-Item .) | tw.TypeOf | Should -Match 'directoryinfo'
     }
     It 'TypeOf [hashtable]' {
-        $Sample.Hash | xa.TypeOf | Should -Match 'hashtable'
+        $Sample.Hash | tw.TypeOf | Should -Match 'hashtable'
     }
 }
     # describe
@@ -70,29 +70,29 @@ Describe 'xa.Object.NameOf' {
 
     #     $Sample1 = @{ a = 10; q = 23; 'sdf' = 4 }
 
-    #     $Sample1 | xa.KeysOf
+    #     $Sample1 | tw.KeysOf
 
-    #     $Sample1 | xa.TypeOf | Join-String -sep ', ' -SingleQuote
-    #     $Sample1 | xa.TypeOf | Join.UL
+    #     $Sample1 | tw.TypeOf | Join-String -sep ', ' -SingleQuote
+    #     $Sample1 | tw.TypeOf | Join.UL
 
-    #     # 1 | xa.Object.KeysOf
+    #     # 1 | tw.Object.KeysOf
     #     $Sample
-    #     1 | xa.Object.KeysOf
+    #     1 | tw.Object.KeysOf
 
     #     $Sample1 = @{ a = 10; q = 23; 'sdf' = 4 }
-    #     $Sample1 | xa.KeysOf
-    #     $Sample1 | xa.TypeOf
-    #     $Sample1 | xa.TypeOf -FormatMode FullName
-    #     $Sample1 | xa.TypeOf -FormatMode TypeInfo
-    #     $Sample1 | xa.TypeOf -FormatMode Name
-    #     $Sample1 | xa.TypeOf -FormatMode TypeInfo
-    #     $Sample1 | xa.TypeOf -FormatMode TypeInfo | Format-ShortTypeName
-    #     $Sample1 | xa.TypeOf -FormatMode TypeInfo | Format-GenericTypeName
-    #     $Sample1 | xa.TypeOf -FormatMode TypeInfo | Format-ShortSciTypeName
-    #     $Sample1 | xa.TypeOf -FormatMode TypeInfo | Format-TypeName
+    #     $Sample1 | tw.KeysOf
+    #     $Sample1 | tw.TypeOf
+    #     $Sample1 | tw.TypeOf -FormatMode FullName
+    #     $Sample1 | tw.TypeOf -FormatMode TypeInfo
+    #     $Sample1 | tw.TypeOf -FormatMode Name
+    #     $Sample1 | tw.TypeOf -FormatMode TypeInfo
+    #     $Sample1 | tw.TypeOf -FormatMode TypeInfo | Format-ShortTypeName
+    #     $Sample1 | tw.TypeOf -FormatMode TypeInfo | Format-GenericTypeName
+    #     $Sample1 | tw.TypeOf -FormatMode TypeInfo | Format-ShortSciTypeName
+    #     $Sample1 | tw.TypeOf -FormatMode TypeInfo | Format-TypeName
     #     }
     # ) {
-    #     $Sample.$label | xa.$name | Should -BeExactly $expected
+    #     $Sample.$label | tw.$name | Should -BeExactly $expected
     # }
 #     }
 # }

@@ -31,16 +31,18 @@ function newEventRecord {
 
 #region SourceInit
 #Dot source the files
-# [Collections.Generic.List[Object]]$HardcodedToExportFunc = @(
-#     'coerce.ToFileInfo'
-#     # 'Get-RandomExcelAntColor'
-#     'xl.Errors.Inspect'
-#     '*'
-# )
+[Collections.Generic.List[Object]]$HardcodedToExportFunc = @(
+    # 'coerce.ToFileInfo'
+    # 'Get-RandomExcelAntColor'
+    # 'xl.Errors.Inspect'
+    'tw.__getKeyNames' # 'tw.KeysOf'
+    # '*'
+)
+[Collections.Generic.List[Object]]$HardcodedToExportAlias = @(
+    'tw.KeysOf' # 'tw.__getKeyNames'
+    # '*'
+)
 
-# $modMeta = [ordered]@{
-
-# }
 # write-warning 'cheat for now on the export rules filtering, I am not yet sure which pattern I prefer'
 Foreach ($FolderItem in 'Private', 'Public') {
     # [Collections.Generic.List[Object]]$ImportItemList = Get-ChildItem -Path $PSScriptRoot\$FolderItem\*.ps1 -ErrorAction SilentlyContinue
@@ -51,7 +53,12 @@ Foreach ($FolderItem in 'Private', 'Public') {
         Recurse = $true
     }
 
-    [Collections.Generic.List[Object]]$ImportItemList = Get-ChildItem @getChildItemSplat
+    # Set-PSBreakpoint -Command 'Set-Location' -Action { break }
+    # Set-PSBreakpoint -Command 'Push-Location' -Action { break }
+    # $ErrorActionPreference = 'break'
+    [Collections.Generic.List[Object]]$ImportItemList = @(Get-ChildItem @getChildItemSplat)
+    [Collections.Generic.List[Object]]$ToExportFunc   = @()
+    [Collections.Generic.List[Object]]$ToExportAlias  = @()
 
     # [Collections.Generic.List[Object]]$ModMeta.Files = @(
     #     $ImportItemList | nin.AddProp -Name 'Stage' -Value '0_all'
@@ -79,15 +86,34 @@ Foreach ($FolderItem in 'Private', 'Public') {
                 return $isMatch
             }
         )
-        $ToExport | Join-String -sep ', ' -single -op 'ToExport = @( ' -os ' )'
-        | Write-Verbose
 
-        $ToExport.AddRange( $hardcodedToExportFunc )
-        | sort -Unique
+        if($hardcodedToExportFunc.count -gt 0) {
+            $ToExportFunc.AddRange( @($hardcodedToExportFunc) )
+                | Sort-Object -Unique
+        }
 
-        Export-ModuleMember -Function @(
-            $ToExport
-        )
+        $ToExportFunc   | Join-String -sep ', ' -single -op 'ToExportFunc = @( ' -os ' )'
+                        | Write-Verbose
+
+        if($ToExportFunc.count -gt 0) {
+            Export-ModuleMember -Function @(
+                $ToExportFunc
+            )
+        }
+
+        if($hardcodedToExportAlias.count -gt 0) {
+            $ToExportAlias.AddRange( @($hardcodedToExportAlias) )
+                | Sort-Object -Unique
+        }
+
+        $ToExportAlias  | Join-String -sep ', ' -single -op 'ToExportAlias = @( ' -os ' )'
+                        | Write-Verbose
+
+        if($ToExportAlias.count -gt 0) {
+            Export-ModuleMember -Alias @(
+                $ToExportAlias
+            )
+        }
     }
 }
 
@@ -99,3 +125,4 @@ if ($__buildCfg.LoadTypeAndFormatdata) {
 # Export-ModuleMember -Cmdlet Find-Type, Find-Member, Format-MemberSignature, Get-Assembly, Get-Parameter -Alias *
 
 pushd $script:______originalRootPath
+

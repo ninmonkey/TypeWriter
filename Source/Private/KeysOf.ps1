@@ -1,4 +1,4 @@
-function xa.__getKeyNames {
+function tw.__getKeyNames {
     <#
     .SYNOPSIS
         internal. returns either [1] keys of a hashtable or [2] property names of an object
@@ -6,12 +6,12 @@ function xa.__getKeyNames {
     future:
         - [ ] ensure it works properly on all dictionary-like types
     .LINK
-        ExcelAnt\xa.__getTypeNames
+        ExcelAnt\tw.__getTypeNames
     #>
     [Alias(
-        # 'xa.Object.MembersOf',
-        'xa.KeysOf',
-        'xa.Object.KeysOf'
+        # 'tw.Object.MembersOf',
+        'tw.KeysOf',
+        'tw.Object.KeysOf'
     )]
     [Cmdletbinding()]
     [OutputType('[string[]]')]
@@ -27,7 +27,7 @@ function xa.__getKeyNames {
         }
     }
 }
-function xa.__getTypeNames {
+function tw.__getTypeNames {
     <#
     .SYNOPSIS
         internal. return typeinfo, using different formats
@@ -35,28 +35,38 @@ function xa.__getTypeNames {
     future:
         - [ ] ensure it works properly on all dictionary-like types
     .EXAMPLE
+        gci .   | tw.TypeOf -FormatMode TypeInfo
+                | Sort-Object -Unique | Format-ShortTypeName
+    .EXAMPLE
+        gci . | tw.TypeOf -FormatMode TypeInfo | Format-ShortTypeName
+
+        gci env:
+            | tw.TypeOf -FormatMode TypeInfo
+            | Sort -Unique | Format-ShortTypeName
+
+    .EXAMPLE
         $Sample1 = @{ a = 10; q = 23; 'sdf' = 4 }
 
         # try:
-            $Sample1 | xa.KeysOf
-            $Sample1 | xa.TypeOf
-            $Sample1 | xa.TypeOf -FormatMode FullName
-            $Sample1 | xa.TypeOf -FormatMode TypeInfo
-            $Sample1 | xa.TypeOf -FormatMode Name
-            $Sample1 | xa.TypeOf -FormatMode TypeInfo
-            $Sample1 | xa.TypeOf -FormatMode TypeInfo | Format-ShortTypeName
-            $Sample1 | xa.TypeOf -FormatMode TypeInfo | Format-GenericTypeName
-            $Sample1 | xa.TypeOf -FormatMode TypeInfo | Format-ShortSciTypeName
-            $Sample1 | xa.TypeOf -FormatMode TypeInfo | Format-TypeName
+            $Sample1 | tw.KeysOf
+            $Sample1 | tw.TypeOf
+            $Sample1 | tw.TypeOf -FormatMode FullName
+            $Sample1 | tw.TypeOf -FormatMode TypeInfo
+            $Sample1 | tw.TypeOf -FormatMode Name
+            $Sample1 | tw.TypeOf -FormatMode TypeInfo
+            $Sample1 | tw.TypeOf -FormatMode TypeInfo | Format-ShortTypeName
+            $Sample1 | tw.TypeOf -FormatMode TypeInfo | Format-GenericTypeName
+            $Sample1 | tw.TypeOf -FormatMode TypeInfo | Format-ShortSciTypeName
+            $Sample1 | tw.TypeOf -FormatMode TypeInfo | Format-TypeName
     .LINK
-        ExcelAnt\xa.__getKeyNames
+        ExcelAnt\tw.__getKeyNames
     #>
     [Alias(
-        # 'xa.Object.MembersOf',
-        'xa.TypeOf'
+        # 'tw.Object.MembersOf',
+        'tw.TypeOf'
         # 'IsKind' ?
         # 'IsA' ?
-        # 'xa.Object.TypeOf'
+        # 'tw.Object.TypeOf'
     )]
     [Cmdletbinding()]
     [OutputType('[string[]]')]
