@@ -36,10 +36,12 @@ function newEventRecord {
     # 'Get-RandomExcelAntColor'
     # 'xl.Errors.Inspect'
     'tw.__getKeyNames' # 'tw.KeysOf'
+    'tw.__getTypeNames' # 'tw.TypeOf'
     # '*'
 )
 [Collections.Generic.List[Object]]$HardcodedToExportAlias = @(
     'tw.KeysOf' # 'tw.__getKeyNames'
+    'tw.TypeOf' # 'tw.__getTypeNames'
     # '*'
 )
 
