@@ -1,9 +1,52 @@
 $error.Count
 err -Clear -ShowCount
+$Harness = @{
+    ImportModeLocal = $true
+}
 
 Push-Location -StackName 'db_harness' -Path .
 # Import-Module '../TypeWriter' -Force
-Import-Module .\Output\TypeWriter -Force -Verbose -DisableNameChecking
+
+function .Fmt.Module {
+    # visually summarize a module, maybe make a EzFormat
+    $Input
+    | Join-String {
+        $cDim = "${fg:gray30}${bg:gray40}"
+        $cBold = "${fg:gray80}${bg:gray20}"
+        $cDef =   $PSStyle.Reset # or "${fg:clear}${bg:clear}"
+
+        "${cBold}{0} = {1}${cDef}`n`t${cDim}{2}${cDef}`n" -f @(
+            $_.Name
+            $_.Version
+            $_.Path
+        )
+    } | Join-String -os $PSStyle.Reset
+}
+$importModuleSplat = @{
+    Force = $true
+    Verbose = $true
+    DisableNameChecking = $true
+    PassThru = $true
+}
+
+if($harness.ImportModeLocal) { # 1] always import local version?
+    Import-Module @importModuleSplat -Name './Source/TypeWriter.psd1'
+        | .Fmt.Module
+} else { # 2] or built version
+    $modPath = Join-Path 'H:/data/2023/pwsh/PsModules.Import' 'TypeWriter'
+    Import-Module @importModuleSplat -Name $modPath
+        | .Fmt.Module
+    # Import-Module .\Output\TypeWriter -Force -Verbose -DisableNameChecking -PassThru
+    # Import-Module @importModuleSplat -Name (Join-Path '../../PsModules.Import' 'TypeWriter')
+}
+h1 'Config'
+$Harness | ft -AutoSize
+
+h1 'List All'
+get-module Typewriter -All
+    | .Fmt.Module
+# | fl
+return
 
 $PSStyle.OutputRendering = 'Ansi' # 'Ansi' | 'Host' | 'NoOutput' | 'PlainText'
 # . (gi -ea stop 'Examples/foo.ps1')

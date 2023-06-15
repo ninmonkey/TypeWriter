@@ -1,5 +1,6 @@
 {
     // 2023-05-21, // sess: 2023-06-03
+
     "folders": [
         {
             "path": "."
@@ -60,8 +61,12 @@ ${dirname}: Matches the parent file's directory name, the src in src/file.ts
             "editor.fontSize": 13,
         },
         "[powershell]": {
+              "editor.suggest.showSnippets": false,
             "editor.fontSize": 16,
+
+
             "editor.fontSize": 14,
+
         },
         "[markdown]": {
             "editor.fontSize": 12,
