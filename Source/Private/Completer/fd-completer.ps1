@@ -24,6 +24,12 @@ function Register-TypeCompleterCommandFdFind {
 }
 
 function Register-TypeCompleterCommandFdFind {
+    <#
+    .SYNOPSIS
+        completions to 'fd'
+    .NOTES
+        see also: <file:///H:\data\2023\dotfiles.2023\pwsh\src\autoloadNow_ArgumentCompleter-butRefactor.ps1>
+    #>
     $fd = {
         param($wordToComplete, $commandAst, $cursorPosition)
         # dotnet complete --position $cursorPosition $commandAst.ToString()

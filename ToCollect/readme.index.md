@@ -6,6 +6,7 @@ See also [First.md](./first.md)
 - [example rg.ps1](file:///H:/root_huge_temp/old-psmodulepaths/2021_myGithubModules/Mini.Examples/Completers/ExternalExamples/rg.ps1)
 - [text TabExpansion2 debug info](file:///H:/robo_root/download/buffer_prototypes/buffer_prototypes/references/tabCompleter/test-disabled-completer.ps1)
 - [shell integeration](file:///C:/Program%20Files/Microsoft%20VS%20Code/resources/app/out/vs/workbench/contrib/terminal/browser/media/shellIntegration.ps1)
+- [nightroman/FarNet/TabExpansion2.ps1](https://github.com/nightroman/FarNet/blob/main/PowerShellFar/TabExpansion2.ps1)
 
 
 sorta 

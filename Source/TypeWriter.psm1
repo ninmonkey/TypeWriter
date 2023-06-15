@@ -35,12 +35,14 @@ function newEventRecord {
     # 'coerce.ToFileInfo'
     # 'Get-RandomExcelAntColor'
     # 'xl.Errors.Inspect'
+    'Render-TypeWriterArgumentCompleterName' # 'tw.Render.CompleterName'
     'tw.__getKeyNames' # 'tw.KeysOf'
     'tw.__getTypeNames' # 'tw.TypeOf'
     # '*'
 )
 [Collections.Generic.List[Object]]$HardcodedToExportAlias = @(
     'tw.KeysOf' # 'tw.__getKeyNames'
+    'tw.Render.CompleterName' # 'Render-TypeWriterArgumentCompleterName'
     'tw.TypeOf' # 'tw.__getTypeNames'
     # '*'
 )
@@ -117,6 +119,16 @@ Foreach ($FolderItem in 'Private', 'Public') {
             )
         }
     }
+
+    # Hardcoded native completers
+    'Loading Arg Completers...' | Write-Verbose
+
+    tw.Render.CompleterName -Command 'fd'
+        | Write-Information -infa 'Continue'
+
+    Register-TypeCompleterCommandFdFind
+
+
 }
 
 if ($__buildCfg.LoadTypeAndFormatdata) {

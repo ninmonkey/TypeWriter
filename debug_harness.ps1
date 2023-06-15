@@ -20,13 +20,13 @@ function .Fmt.Module {
             $_.Version
             $_.Path
         )
-    } | Join-String -os $PSStyle.Reset
+    }   | Join-String -os $PSStyle.Reset
 }
 $importModuleSplat = @{
-    Force = $true
-    Verbose = $true
     DisableNameChecking = $true
-    PassThru = $true
+    Force               = $true
+    PassThru            = $true
+    Verbose             = $true
 }
 
 if($harness.ImportModeLocal) { # 1] always import local version?
@@ -39,6 +39,22 @@ if($harness.ImportModeLocal) { # 1] always import local version?
     # Import-Module .\Output\TypeWriter -Force -Verbose -DisableNameChecking -PassThru
     # Import-Module @importModuleSplat -Name (Join-Path '../../PsModules.Import' 'TypeWriter')
 }
+
+
+'available'
+Get-Command -m TypeWriter -ListImported -All
+    # | Ft
+    | Sort-Object -Unique { $_.Name, $_.Source }
+    | Sort-Object Source, Name, CommandType
+    | Format-Table -AutoSize
+
+'imported'
+Get-Command -m TypeWriter -ListImported
+    # | Ft
+    | Sort-Object -Unique { $_.Name, $_.Source }
+    | Sort-Object Source, Name, CommandType
+    | Format-Table -AutoSize
+
 h1 'Config'
 $Harness | ft -AutoSize
 
@@ -46,15 +62,17 @@ h1 'List All'
 get-module Typewriter -All
     | .Fmt.Module
 # | fl
+
 return
+
 
 $PSStyle.OutputRendering = 'Ansi' # 'Ansi' | 'Host' | 'NoOutput' | 'PlainText'
 # . (gi -ea stop 'Examples/foo.ps1')
 
 $Harness = @{
-    SourcePath = (Join-Path $PSScriptRoot 'Source')
-    OutputPath = (Join-Path $PSScriptRoot 'Output')
     ImportMode = 'SourcePath' # [ SourcePath | OutputPath ]
+    OutputPath = (Join-Path $PSScriptRoot 'Output')
+    SourcePath = (Join-Path $PSScriptRoot 'Source')
 }
 # $Harness.ImportMode = 'OutputPath'
 # $Harness.CurImportFullpath = (Join-Path $Harness.($Harness.ImportMode) 'TypeWriter')
@@ -73,19 +91,7 @@ $Harness.ImportMode = 'OutputPath'
 # Import-Module $Harness.CurImportFullpath -Force -Verbose
 # $HarnessExample.CurImportFullpath = (Join-Path $HarnessExample.($HarnessExample.ImportMode) 'TypeWriter')
 # remove-module 'TypeWriter' -ea ignore
-'available'
-Get-Command -m TypeWriter -ListImported -All
-# | Ft
-| Sort-Object -Unique { $_.Name, $_.Source }
-| Sort-Object Source, Name, CommandType
-| Format-Table -AutoSize
 
-'imported'
-Get-Command -m TypeWriter -ListImported
-# | Ft
-| Sort-Object -Unique { $_.Name, $_.Source }
-| Sort-Object Source, Name, CommandType
-| Format-Table -AutoSize
 
 
 <# see?
