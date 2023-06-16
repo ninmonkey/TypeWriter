@@ -23,10 +23,12 @@ function Register-TypeCompleterCommandFdFind {
 
 }
 
-$__fdCompletionAliasList = @(
+$__fdCompletionsData = @(
+
     @{
         ShortName = '-H'
         FullName  = '--hidden'
+        Tooltip = 'Search hidden files and directories'
     }
     @{
         ShortName = '-I'
@@ -142,3 +144,18 @@ Change the current working directory of fd to the provided path. This means that
     Register-ArgumentCompleter -Native -CommandName 'fd' -ScriptBlock $fd
 }
 
+$__fdCompletionsData | %{
+    $record = $_
+    $NewCompletionResultSplat = @{
+        Text = $record.FullName
+        listItemText = $record.FullName
+        resultType = 'ParameterValue'
+        toolTip = $record.ToolTip ?? '<missing>'
+    }
+    if($record.ShortName){
+        $NewCompletionResultSplat.Alias = $record.ShortName
+    }
+    tw.New-CompletionResult @NewCompletionResultSplat
+}
+
+$null = 0
