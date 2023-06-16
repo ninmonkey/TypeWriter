@@ -7,6 +7,18 @@ $__fdCompletionsData = @(
         Tooltip   = 'Search hidden files and directories'
     }
     @{
+        FullName  = '-1'
+        Tooltip   = ' Limit the search to a single result and quit immediately. This is an alias for
+            ''--max-results=1''.'
+    }
+    @{
+        ShortName = '-q'
+        FullName  = '-quiet'
+        Tooltip   = ' When the flag is present, the program does not print anything and will return with an
+            exit code of 0 if there is at least one match. Otherwise, the exit code will be 1.
+            ''--has-results'' can be used as an alias.'
+    }
+    @{
         ShortName = '-I'
         FullName  = '--no-ignore'
         Tooltip = 'Do not respect .(git|fd)ignore files'
@@ -20,6 +32,11 @@ $__fdCompletionsData = @(
         ShortName = '-i'
         FullName  = '--ignore-case'
         ToolTip = 'Case-insensitive search (default: smart case)'
+    }
+    @{
+        FullName  = '--ignore-file'
+        Rest = '<path>'
+        ToolTip = 'Add a custom ignore-file in ''.gitignore'' format. These files have a low precedence.'
     }
     @{
         ShortName = '-g'
@@ -74,6 +91,11 @@ $__fdCompletionsData = @(
         Rest      = ' <cmd>...'
     }
     @{
+        FullName  = '--show-errors'
+        ToolTip = 'Enable the display of filesystem errors for situations such as insufficient permissions
+            or dead symlinks.'
+    }
+    @{
         ShortName = '-X'
         FullName  = '--exec-batch'
         ToolTip = 'Execute a command with all search results at once'
@@ -84,6 +106,16 @@ $__fdCompletionsData = @(
         FullName  = '--exclude'
         ToolTip = 'Exclude entries that match the given glob pattern'
         Rest      = ' <pattern>'
+        LongHelp = @'
+-E, --exclude <pattern>
+Exclude files/directories that match the given glob pattern. This overrides any other
+ignore logic. Multiple exclude patterns can be specified.
+
+Examples:
+    --exclude '*.pyc'
+    --exclude node_modules
+
+'@ | tw.Format-NormalizeLineEnding
     }
     @{
         ShortName = '-c'
@@ -92,10 +124,36 @@ $__fdCompletionsData = @(
         Rest      = ' <when>'
     }
     @{
+        ShortName = '-j'
+        FullName  = '--threads'
+        ToolTip = '<num> Set number of threads to use for searching & executing (default: number of available CPU
+            cores)'
+        Rest      = '<num>'
+    }
+    @{
         ShortName = '-S'
         FullName  = '--size'
         ToolTip = 'Limit results based on the size of files'
         Rest      = ' <size>'
+        LongHelp = @'
+-S, --size <size>
+Limit results based on the size of files using the format <+-><NUM><UNIT>.
+    '+': file size must be greater than or equal to this
+    '-': file size must be less than or equal to this
+If neither '+' nor '-' is specified, file size must be exactly equal to this.
+    'NUM':  The numeric size (e.g. 500)
+    'UNIT': The units for NUM. They are not case-sensitive.
+Allowed unit values:
+    'b':  bytes
+    'k':  kilobytes (base ten, 10^3 = 1000 bytes)
+    'm':  megabytes
+    'g':  gigabytes
+    't':  terabytes
+    'ki': kibibytes (base two, 2^10 = 1024 bytes)
+    'mi': mebibytes
+    'gi': gibibytes
+    'ti': tebibytes
+'@ #| tw.Format-NormalizeLineEnding
     }
     @{
         ShortName = '-h'
@@ -112,14 +170,33 @@ $__fdCompletionsData = @(
         FullName  = '--changed-within'
         ArgType = '<date|dur>'
         ToolTip = '<date|dur> Filter by file modification time (newer than)'
-        LongHelp = 'super long doc string'
+        LongHelp = @'
+--changed-within <date|dur>
+    Filter results based on the file modification time. The argument can be provided as a
+    specific point in time (YYYY-MM-DD HH:MM:SS) or as a duration (10h, 1d, 35min). If the
+    time is not specified, it defaults to 00:00:00. '--change-newer-than' or '--newer' can
+    be used as aliases.
+    Examples:
+        --changed-within 2weeks
+        --change-newer-than '2018-10-27 10:00:00'
+        --newer 2018-10-27
+'@ | tw.Format-NormalizeLineEnding
     }
     @{
         # ShortName = '-V'
         FullName  = '--changed-before'
         ArgType = '<date|dur>'
         ToolTip = 'Filter by file modification time (older than)'
-        LongHelp = 'super long doc string'
+        LongHelp = @'
+--changed-before <date|dur>
+    Filter results based on the file modification time. The argument can be provided as a
+    specific point in time (YYYY-MM-DD HH:MM:SS) or as a duration (10h, 1d, 35min).
+    '--change-older-than' or '--older' can be used as aliases.
+    Examples:
+        --changed-before '2018-10-27 10:00:00'
+        --change-older-than 2weeks
+        --older 2018-10-27
+'@ | tw.Format-NormalizeLineEnding
     }
 )
 
