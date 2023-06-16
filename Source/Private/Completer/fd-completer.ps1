@@ -1,27 +1,3 @@
-# New-completion?
-# function completers.fdFind {}
-# function completions.fdFind {}
-
-function Register-TypeCompleterCommandFdFind {
-    <#
-    .SYNOPSIS
-    wrap completions for Fd Search
-
-    .DESCRIPTION
-    from <https://github.com/sharkdp/fd#features>
-
-    .EXAMPLE
-    An example
-
-    .NOTES
-    General notes
-    .LINK
-        https://github.com/sharkdp/fd#features
-    .LINK
-        https://docs.rs/regex/1.0.0/regex/#syntax
-    #>
-
-}
 
 $__fdCompletionsData = @(
 
@@ -112,10 +88,36 @@ $__fdCompletionsData = @(
     }
 )
 
+function __generateCompletions_fd  {
+
+    return $__fdCompletionsData | %{
+        $record = $_
+        $NewCompletionResultSplat = @{
+            Text = $record.FullName
+            listItemText = $record.FullName
+            resultType = 'ParameterValue'
+            toolTip = $record.ToolTip ?? '<missing>'
+        }
+        if($record.ShortName){
+            $NewCompletionResultSplat.Alias = $record.ShortName
+        }
+        tw.New-CompletionResult @NewCompletionResultSplat
+    } | Sort-Object CompletionText
+
+}
+
 function Register-TypeCompleterCommandFdFind {
     <#
     .SYNOPSIS
         completions to 'fd'
+    .DESCRIPTION
+        from <https://github.com/sharkdp/fd#features>
+    .NOTES
+    General notes
+    .LINK
+        https://github.com/sharkdp/fd#features
+    .LINK
+        https://docs.rs/regex/1.0.0/regex/#syntax
     .NOTES
         see also: <file:///H:\data\2023\dotfiles.2023\pwsh\src\autoloadNow_ArgumentCompleter-butRefactor.ps1>
     future:
@@ -124,38 +126,32 @@ function Register-TypeCompleterCommandFdFind {
     #>
     $fd = {
         param($wordToComplete, $commandAst, $cursorPosition)
-        [Collections.Generic.List[Object]]$GeneratedCompletions = @(
-            tw.New-CompletionResult -Text '--name' -listItemText '--name' -resultType ParameterName 'stuff'
 
-            $longTip = @'
+        return [Collections.Generic.List[Object]]$GeneratedCompletions = @(
+            __generateCompletions_fd
+        ) | Sort-Object CompletionText
+
+        throw 'ShouldNeverReachException: Dead code'
+        if ($false -and 'original') {
+            [Collections.Generic.List[Object]]$GeneratedCompletions = @(
+                tw.New-CompletionResult -Text '--name' -listItemText '--name' -resultType ParameterName 'stuff'
+
+                $longTip = @'
 Change the current working directory of fd to the provided path. This means that search
             results will be shown with respect to the given base path. Note that relative paths
             which are passed to fd via the positional <path> argument or the '--search-path' option
             will also be resolved relative to this directory.
 '@ # | tw.Format-NormalizeLineEnding # not needed? maybe on some configs? # -replace '\r?\n', "`n"
-            tw.New-CompletionResult -Text '--base-directory' -listItemText '--base-directory' -resultType ParameterValue -toolTip $longTip
+                tw.New-CompletionResult -Text '--base-directory' -listItemText '--base-directory' -resultType ParameterValue -toolTip $longTip
 
-            $longTip = @'
+                $longTip = @'
 '@
-            tw.New-CompletionResult -Text '--base-directory' -listItemText '--base-directory' -resultType ParameterValue -toolTip $longTip
-        )
-        return $GeneratedCompletions
+                tw.New-CompletionResult -Text '--base-directory' -listItemText '--base-directory' -resultType ParameterValue -toolTip $longTip
+            )
+            return $GeneratedCompletions
+        }
     }
     Register-ArgumentCompleter -Native -CommandName 'fd' -ScriptBlock $fd
-}
-
-$__fdCompletionsData | %{
-    $record = $_
-    $NewCompletionResultSplat = @{
-        Text = $record.FullName
-        listItemText = $record.FullName
-        resultType = 'ParameterValue'
-        toolTip = $record.ToolTip ?? '<missing>'
-    }
-    if($record.ShortName){
-        $NewCompletionResultSplat.Alias = $record.ShortName
-    }
-    tw.New-CompletionResult @NewCompletionResultSplat
 }
 
 $null = 0
