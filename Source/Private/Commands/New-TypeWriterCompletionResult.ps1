@@ -68,7 +68,14 @@ function New-TypeWriterCompletionResult {
         [ValidateNotNullOrEmpty()]
         # the tooltip for menuCompletions
         [Parameter(Mandatory, position=3)]
-        [string]$toolTip
+        [string]$toolTip,
+
+        # creates a 2nd record, usiing an alias
+        [ValidateNotNullOrEmpty()]
+        [Alias('ShortText')]
+        # the tooltip for menuCompletions
+        [Parameter(Position=4)]
+        [string]$Alias
     )
 
           # [System.Management.Automation.CompletionResult]::new(
@@ -78,10 +85,20 @@ function New-TypeWriterCompletionResult {
             #     '-ToA'   <# tooltip #>
             # )
 
-    return ([TWCompletionResult]::new(
-        $Text,         <# on tab #>
-        $listItemText, <# on menuComplete #>
-        $resultType,   <# kind #>
-        $toolTip       <# tooltip #>
-    )).AsCompletionResult()
+    return @(
+        if( -not [string]::IsNullOrWhiteSpace($Alias) ) {
+            ([TWCompletionResult]::new(
+                $Alias,         <# on tab #>
+                $listItemText, <# on menuComplete #>
+                $resultType,   <# kind #>
+                $toolTip       <# tooltip #>
+            )).AsCompletionResult()
+        }
+        ([TWCompletionResult]::new(
+            $Text,         <# on tab #>
+            $listItemText, <# on menuComplete #>
+            $resultType,   <# kind #>
+            $toolTip       <# tooltip #>
+        )).AsCompletionResult()
+    )
 }

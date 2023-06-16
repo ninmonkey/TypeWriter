@@ -23,6 +23,93 @@ function Register-TypeCompleterCommandFdFind {
 
 }
 
+$__fdCompletionAliasList = @(
+    @{
+        ShortName = '-H'
+        FullName  = '--hidden'
+    }
+    @{
+        ShortName = '-I'
+        FullName  = '--no-ignore'
+    }
+    @{
+        ShortName = '-s'
+        FullName  = '--case-sensitive'
+    }
+    @{
+        ShortName = '-i'
+        FullName  = '--ignore-case'
+    }
+    @{
+        ShortName = '-g'
+        FullName  = '--glob'
+    }
+    @{
+        ShortName = '-a'
+        FullName  = '--absolute-path'
+    }
+    @{
+        ShortName = '-l'
+        FullName  = '--list-details'
+    }
+    @{
+        ShortName = '-L'
+        FullName  = '--follow'
+    }
+    @{
+        ShortName = '-p'
+        FullName  = '--full-path'
+    }
+    @{
+        ShortName = '-d'
+        FullName  = '--max-depth'
+        Rest      = ' <depth>'
+    }
+    @{
+        ShortName = '-t'
+        FullName  = '--type'
+        Rest      = ' <filetype>'
+    }
+    @{
+        ShortName = '-e'
+        FullName  = '--extension'
+        Rest      = ' <ext>'
+    }
+    @{
+        ShortName = '-x'
+        FullName  = '--exec'
+        Rest      = ' <cmd>...'
+    }
+    @{
+        ShortName = '-X'
+        FullName  = '--exec-batch'
+        Rest      = ' <cmd>...'
+    }
+    @{
+        ShortName = '-E'
+        FullName  = '--exclude'
+        Rest      = ' <pattern>'
+    }
+    @{
+        ShortName = '-c'
+        FullName  = '--color'
+        Rest      = ' <when>'
+    }
+    @{
+        ShortName = '-S'
+        FullName  = '--size'
+        Rest      = ' <size>'
+    }
+    @{
+        ShortName = '-h'
+        FullName  = '--help'
+    }
+    @{
+        ShortName = '-V'
+        FullName  = '--version'
+    }
+)
+
 function Register-TypeCompleterCommandFdFind {
     <#
     .SYNOPSIS
@@ -44,6 +131,10 @@ Change the current working directory of fd to the provided path. This means that
             which are passed to fd via the positional <path> argument or the '--search-path' option
             will also be resolved relative to this directory.
 '@ # | tw.Format-NormalizeLineEnding # not needed? maybe on some configs? # -replace '\r?\n', "`n"
+            tw.New-CompletionResult -Text '--base-directory' -listItemText '--base-directory' -resultType ParameterValue -toolTip $longTip
+
+            $longTip = @'
+'@
             tw.New-CompletionResult -Text '--base-directory' -listItemText '--base-directory' -resultType ParameterValue -toolTip $longTip
         )
         return $GeneratedCompletions
