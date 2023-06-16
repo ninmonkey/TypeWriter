@@ -35,15 +35,21 @@ function newEventRecord {
     # 'coerce.ToFileInfo'
     # 'Get-RandomExcelAntColor'
     # 'xl.Errors.Inspect'
+    #
     'Render-TypeWriterArgumentCompleterName' # 'tw.Render.CompleterName'
     'tw.__getKeyNames' # 'tw.KeysOf'
     'tw.__getTypeNames' # 'tw.TypeOf'
+    #
+    'New-TypeWriterCompletionResult' # 'tw.New-CompletionResult'
     # '*'
 )
 [Collections.Generic.List[Object]]$HardcodedToExportAlias = @(
+    #
     'tw.KeysOf' # 'tw.__getKeyNames'
     'tw.Render.CompleterName' # 'Render-TypeWriterArgumentCompleterName'
     'tw.TypeOf' # 'tw.__getTypeNames'
+    #
+    'tw.New-CompletionResult' # 'New-TypeWriterCompletionResult'
     # '*'
 )
 
@@ -139,4 +145,3 @@ if ($__buildCfg.LoadTypeAndFormatdata) {
 # Export-ModuleMember -Cmdlet Find-Type, Find-Member, Format-MemberSignature, Get-Assembly, Get-Parameter -Alias *
 
 pushd $script:______originalRootPath
-
