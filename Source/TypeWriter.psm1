@@ -39,6 +39,8 @@ function newEventRecord {
     'Render-TypeWriterArgumentCompleterName' # 'tw.Render.CompleterName'
     'tw.__getKeyNames' # 'tw.KeysOf'
     'tw.__getTypeNames' # 'tw.TypeOf'
+    'Format-TypeWriterNormalizeLineEnding' # 'tw.Format-NormalizeLineEnding'
+
     #
     'New-TypeWriterCompletionResult' # 'tw.New-CompletionResult'
     # '*'
@@ -48,6 +50,7 @@ function newEventRecord {
     'tw.KeysOf' # 'tw.__getKeyNames'
     'tw.Render.CompleterName' # 'Render-TypeWriterArgumentCompleterName'
     'tw.TypeOf' # 'tw.__getTypeNames'
+    'tw.Format-NormalizeLineEnding' # 'Format-TypeWriterNormalizeLineEnding'
     #
     'tw.New-CompletionResult' # 'New-TypeWriterCompletionResult'
     # '*'

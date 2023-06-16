@@ -37,28 +37,41 @@ function Register-TypeCompleterCommandFdFind {
         @(
 
 
-            # [System.Management.Automation.CompletionResult]::new(
-            #     '-a-strip-cwd-prefix',
-            #     '-a-strip-cwd-prefix',
-            #     'ParameterName',
-            #     'By default, relative paths are prefixed with ''./'' when the output goes to a non interactive terminal
+
+            # $completionSplat = @{
+            #     Name         = 'a'
+            #     listItemText = 'b'
+            #     resultType   = 'ParameterName'
+            #     toolTip      = 'By default, relative paths are prefixed with ''./'' when the output goes to a non interactive terminal
             # (TTY). Use this flag to disable this behaviour.'
-            # )
+            # }
+            # [System.Management.Automation.CompletionResult]::new($completionSplat)
 
-            $completionSplat = @{
-                Name         = 'a'
-                listItemText = 'b'
-                resultType   = 'Method'
-                toolTip      = 'c'
-            }
+            tw.New-CompletionResult -Text '--name' -listItemText '--name' -resultType ParameterName 'stuff'
 
-            tw.New-CompletionResult @completionSplat
+            $longTip = @'
+Change the current working directory of fd to the provided path. This means that search
+            results will be shown with respect to the given base path. Note that relative paths
+            which are passed to fd via the positional <path> argument or the '--search-path' option
+            will also be resolved relative to this directory.
+'@ # | tw.Format-NormalizeLineEnding # not needed? maybe on some configs? # -replace '\r?\n', "`n"
+            tw.New-CompletionResult -Text '--base-directory' -listItemText '--base-directory' -resultType ParameterValue -toolTip $longTip
+            # $longTip = 'a...b'
+
+#             $longTip = @'
+# Change the current working directory of fd to the provided path. This means that search
+#             results will be shown with respect to the given base path. Note that relative paths
+#             which are passed to fd via the positional <path> argument or the '--search-path' option
+#             will also be resolved relative to this directory.
+# '@ -replace '\r?\n', "`n"
+
+            # tw.New-CompletionResult -name '--base-directory' '--base-directory' ParameterValue -toolTip $longTip
+
 
         )
 
         # }
     }
     Register-ArgumentCompleter -Native -CommandName 'fd' -ScriptBlock $fd
-
 }
 

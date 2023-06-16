@@ -50,16 +50,18 @@ function New-TypeWriterCompletionResult {
         # base Name
         [ValidateNotNullOrEmpty()]
         [Parameter(Mandatory, position=0)]
-        [string]$Name,
+        [string]$Text,
 
         # MenuCompletion name
         [ValidateNotNullOrEmpty()]
+        [Alias('List')]
         [Parameter(Mandatory, position=1)]
         [string]$listItemText,
 
         # completion kind
         [ValidateNotNullOrEmpty()]
         [Parameter(Mandatory, position=2)]
+        [Alias('Kind', 'Type')]
         [System.Management.Automation.CompletionResultType]$resultType,
 
         # tooltip on MenuComplete
@@ -77,7 +79,7 @@ function New-TypeWriterCompletionResult {
             # )
 
     return ([TWCompletionResult]::new(
-        $Name,         <# on tab #>
+        $Text,         <# on tab #>
         $listItemText, <# on menuComplete #>
         $resultType,   <# kind #>
         $toolTip       <# tooltip #>
