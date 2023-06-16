@@ -1,10 +1,10 @@
 
 $__fdCompletionsData = @(
-
+    # future: Type coerces into
     @{
         ShortName = '-H'
         FullName  = '--hidden'
-        Tooltip = 'Search hidden files and directories'
+        Tooltip   = 'Search hidden files and directories'
     }
     @{
         ShortName = '-I'
@@ -88,21 +88,39 @@ $__fdCompletionsData = @(
     }
 )
 
-function __generateCompletions_fd  {
+function __generateCompletions_fd {
+    # not the cleanest, but generates two records if there is an alias, else 1
+    $GenerationModeNew = $false
+    if ($GenerationModeNew) {
+        write-warning 'may not quite work yet'
+        return $__fdCompletionsData | % {
+            [TWCompletionResult]::new( $_ ).AsCompletionResult()
 
-    return $__fdCompletionsData | %{
-        $record = $_
-        $NewCompletionResultSplat = @{
-            Text = $record.FullName
-            listItemText = $record.FullName
-            resultType = 'ParameterValue'
-            toolTip = $record.ToolTip ?? '<missing>'
+            if ( -not [string]::IsNullOrWhiteSpace( $_.ShortName ) ) {
+                $hashAlias = [hashtable]::new( $_ )
+                $hashAlias.FullName = $hashAlias.ShortName
+                [TWCompletionResult]::new( $hashAlias ).AsCompletionResult()
+            }
         }
-        if($record.ShortName){
-            $NewCompletionResultSplat.Alias = $record.ShortName
-        }
-        tw.New-CompletionResult @NewCompletionResultSplat
-    } | Sort-Object CompletionText
+        return
+    }
+
+
+    if (-not $GenerationModeNew -and 'old conversion') {
+        return $__fdCompletionsData | % {
+            $record = $_
+            $NewCompletionResultSplat = @{
+                Text         = $record.FullName
+                listItemText = $record.FullName
+                resultType   = 'ParameterValue'
+                toolTip      = $record.ToolTip ?? '<missing>'
+            }
+            if ($record.ShortName) {
+                $NewCompletionResultSplat.Alias = $record.ShortName
+            }
+            tw.New-CompletionResult @NewCompletionResultSplat
+        } | Sort-Object CompletionText
+    }
 
 }
 

@@ -7,6 +7,17 @@ class TWCompletionResult {
     [string]$toolTip        = [string]::Empty
     hidden [datetime]$Created
 
+    TWCompletionResult( [hashtable]$InputHash ) {
+        # does not yet support aliases
+        $this.Created = [datetime]::Now
+        $this.completionText = $InputHash.FullName
+        $this.listItemText = $InputHash.FullName
+
+        $kind = [System.Management.Automation.CompletionResultType]($InputHash.ResultType ?? 'ParameterValue') ?? ([System.Management.Automation.CompletionResultType]::ParameterValue)
+        $this.resultType = $kind
+        $this.toolTip = $InputHash.ToolTip
+    }
+
     TWCompletionResult(
         [string]$completionText,
         [string]$listItemText,
