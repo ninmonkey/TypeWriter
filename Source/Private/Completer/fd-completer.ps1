@@ -98,8 +98,109 @@ $__fdCompletionsData = @(
     @{
         ShortName = '-X'
         FullName  = '--exec-batch'
-        ToolTip = 'Execute a command with all search results at once'
-        Rest      = ' <cmd>...'
+        ToolTip = 'Execute the given command once, with all search results as arguments'
+        Rest      = ' <placeholder>...'
+        LongHelp = @'
+-X, --exec-batch <cmd>...
+        Execute the given command once, with all search results as arguments.
+        One of the following placeholders is substituted bpwdefore the command is executed:
+            '{}':   path (of all search results)
+            '{/}':  basename
+            '{//}': parent directory
+            '{.}':  path without file extension
+            '{/.}': basename without file extension
+
+        If no placeholder is present, an implicit "{}" at the end is assumed.
+
+        Examples:
+
+            - Find all test_*.py files and open them in your favorite editor:
+
+                fd -g 'test_*.py' -X vim
+
+            - Find all *.rs files and count the lines with "wc -l ...":
+
+                fd -e rs -X wc -l
+'@
+    }
+    @{
+        ShortName = '-x'
+        FullName  = '--exec'
+        ToolTip = 'Execute a command for each search result in parallel. (use --threads=1 for sequential
+        command execution). All positional arguments following --exec are considered to be
+        arguments to the command - not to fd. It is therefore recommended to place the
+        ''-x''/''--exec'' option last '
+        Rest      = '<cmd>'
+        LongHelp = @'
+-x, --exec <cmd>...
+        Execute a command for each search result in parallel (use --threads=1 for sequential
+        command execution). All positional arguments following --exec are considered to be
+        arguments to the command - not to fd. It is therefore recommended to place the
+        '-x'/'--exec' option last.
+        The following placeholders are substituted before the command is executed:
+            '{}':   path (of the current search result)
+            '{/}':  basename
+            '{//}': parent directory
+            '{.}':  path without file extension
+            '{/.}': basename without file extension
+
+        If no placeholder is present, an implicit "{}" at the end is assumed.
+
+        Examples:
+
+            - find all *.zip files and unzip them:
+
+                fd -e zip -x unzip
+
+            - find *.h and *.cpp files and run "clang-format -i .." for each of them:
+
+                fd -e h -e cpp -x clang-format -i
+
+            - Convert all *.jpg files to *.png files:
+
+                fd -e jpg -x convert {} {.}.png
+'@
+    }
+    @{
+        # ShortName = '-X'
+        FullName  = '--path-separator'
+        ToolTip = 'default is the OS-specific: separator (''/'' on Unix, ''\'' on Windows)'
+        Rest      = '<separator>'
+        LongHelp = @'
+--path-separator <separator>
+    Set the path separator to use when printing file paths. The default is the OS-specific
+    separator ('/' on Unix, '\' on Windows).
+'@ | tw.Format-NormalizeLineEnding
+    }
+    @{
+        # ShortName = '-X'
+        FullName  = '--search-path'
+        ToolTip = 'paths to search as an alternative to the positional <path> argument'
+        Rest      = '<path>'
+        LongHelp = @'
+--search-path <search-path>
+    Provide paths to search as an alternative to the positional <path> argument. Changes the
+    usage to:
+        fd [OPTIONS] --search-path <path> --search-path <path2> [<pattern>]
+'@ | tw.Format-NormalizeLineEnding
+    }
+    @{
+        FullName  = '--one-file-system'
+        ToolTip = 'ensures that it does not descend into a different file system than the one
+            it started in. Comparable to the -mount or -xdev filters of find(1).'
+        LongHelp      = @'
+By default, fd will traverse the file system tree as far as other options dictate. With
+            this flag, fd ensures that it does not descend into a different file system than the one
+            it started in. Comparable to the -mount or -xdev filters of find(1).
+'@ | tw.Format-NormalizeLineEnding
+    }
+    @{
+        FullName  = '--strip-cwd-prefix'
+        ToolTip = 'Do not prefix relative paths with ''./'' when piped'
+        LongHelp      = @'
+By default, relative paths are prefixed with './' when the output goes to a non
+            interactive terminal (TTY). Use this flag to disable this behaviour.
+'@ | tw.Format-NormalizeLineEnding
     }
     @{
         ShortName = '-E'
@@ -196,6 +297,33 @@ Allowed unit values:
         --changed-before '2018-10-27 10:00:00'
         --change-older-than 2weeks
         --older 2018-10-27
+'@ | tw.Format-NormalizeLineEnding
+    }
+    @{
+        # ShortName = '-V'
+        FullName  = '--base-directory'
+        ArgType = '<path>'
+        ToolTip = 'Change the current working directory of fd to the provided path'
+        LongHelp = @'
+--base-directory <path>
+    Change the current working directory of fd to the provided path. This means that search
+    results will be shown with respect to the given base path. Note that relative paths
+    which are passed to fd via the positional <path> argument or the '--search-path' option
+    will also be resolved relative to this directory.
+'@ | tw.Format-NormalizeLineEnding
+    }
+    @{
+        # ShortName = '-V'
+        FullName  = '--batch-size'
+        ArgType = '<size>'
+        ToolTip = 'Maximum number of arguments to pass to the command given with -X'
+        LongHelp = @'
+--batch-size <size>
+    Maximum number of arguments to pass to the command given with -X. If the number of
+    results is greater than the given size, the command given with -X is run again with
+    remaining arguments. A batch size of zero means there is no limit (default), but note
+    that batching might still happen due to OS restrictions on the maximum length of command
+    lines.
 '@ | tw.Format-NormalizeLineEnding
     }
 )

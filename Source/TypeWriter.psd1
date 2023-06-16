@@ -5,7 +5,7 @@
     RootModule        = 'TypeWriter.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.0.11'
+    ModuleVersion     = '0.0.12'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
