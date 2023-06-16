@@ -9,82 +9,117 @@ $__fdCompletionsData = @(
     @{
         ShortName = '-I'
         FullName  = '--no-ignore'
+        Tooltip = 'Do not respect .(git|fd)ignore files'
     }
     @{
         ShortName = '-s'
         FullName  = '--case-sensitive'
+        ToolTip = 'Case-sensitive search (default: smart case)'
     }
     @{
         ShortName = '-i'
         FullName  = '--ignore-case'
+        ToolTip = 'Case-insensitive search (default: smart case)'
     }
     @{
         ShortName = '-g'
         FullName  = '--glob'
+        ToolTip = 'Glob-based search (default: regular expression)'
+        Url = '<link to glob syntax here...>'
+
     }
     @{
         ShortName = '-a'
         FullName  = '--absolute-path'
+        ToolTip = 'Show absolute instead of relative paths'
     }
     @{
         ShortName = '-l'
         FullName  = '--list-details'
+        ToolTip = 'Use a long listing format with file metadata'
     }
     @{
         ShortName = '-L'
         FullName  = '--follow'
+        ToolTip = 'Follow symbolic links'
     }
     @{
         ShortName = '-p'
         FullName  = '--full-path'
+        ToolTip = 'Search full abs. path (default: filename only)'
     }
     @{
         ShortName = '-d'
         FullName  = '--max-depth'
+        ToolTip = 'Set maximum search depth (default: none)'
         Rest      = ' <depth>'
     }
     @{
         ShortName = '-t'
         FullName  = '--type'
+        ToolTip = 'Filter by type: file (f), directory (d), symlink (l),
+                                       executable (x), empty (e), socket (s), pipe (p)'
         Rest      = ' <filetype>'
     }
     @{
         ShortName = '-e'
         FullName  = '--extension'
+        ToolTip = 'Filter by file extension'
         Rest      = ' <ext>'
     }
     @{
         ShortName = '-x'
         FullName  = '--exec'
+        ToolTip = 'Execute a command for each search result'
         Rest      = ' <cmd>...'
     }
     @{
         ShortName = '-X'
         FullName  = '--exec-batch'
+        ToolTip = 'Execute a command with all search results at once'
         Rest      = ' <cmd>...'
     }
     @{
         ShortName = '-E'
         FullName  = '--exclude'
+        ToolTip = 'Exclude entries that match the given glob pattern'
         Rest      = ' <pattern>'
     }
     @{
         ShortName = '-c'
         FullName  = '--color'
+        ToolTip = 'When to use colors: never, *auto*, always'
         Rest      = ' <when>'
     }
     @{
         ShortName = '-S'
         FullName  = '--size'
+        ToolTip = 'Limit results based on the size of files'
         Rest      = ' <size>'
     }
     @{
         ShortName = '-h'
         FullName  = '--help'
+        ToolTip = 'Print help information'
     }
     @{
         ShortName = '-V'
         FullName  = '--version'
+        ToolTip = 'Print version information'
+    }
+    @{
+        # ShortName = '-V'
+        FullName  = '--changed-within'
+        ArgType = '<date|dur>'
+        ToolTip = '<date|dur> Filter by file modification time (newer than)'
+        LongHelp = 'super long doc string'
+    }
+    @{
+        # ShortName = '-V'
+        FullName  = '--changed-before'
+        ArgType = '<date|dur>'
+        ToolTip = 'Filter by file modification time (older than)'
+        LongHelp = 'super long doc string'
     }
 )
 
