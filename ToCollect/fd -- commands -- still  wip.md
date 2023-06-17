@@ -22,69 +22,36 @@ ARGS:
             current working directory.
 
 OPTIONS:
-    -H, --hidden
-            Include hidden directories and files in the search results (default: hidden files and
-            directories are skipped). Files and directories are considered to be hidden if their
-            name starts with a `.` sign (dot). The flag can be overridden with --no-hidden.
 
-    -I, --no-ignore
-            Show search results from files and directories that would otherwise be ignored by
-            '.gitignore', '.ignore', '.fdignore', or the global ignore file. The flag can be
-            overridden with --ignore.
 
-        --no-ignore-vcs
-            Show search results from files and directories that would otherwise be ignored by
-            '.gitignore' files. The flag can be overridden with --ignore-vcs.
 
-        --no-ignore-parent
-            Show search results from files and directories that would otherwise be ignored by
-            '.gitignore', '.ignore', or '.fdignore' files in parent directories.
 
-    -u, --unrestricted
-            Perform an unrestricted search, including ignored and hidden files. This is an alias for
-            '--no-ignore --hidden'.
+-F, --fixed-strings
+        Treat the pattern as a literal string instead of a regular expression. Note that this
+        also performs substring comparison. If you want to match on an exact filename, consider
+        using '--glob'.
 
-    -s, --case-sensitive
-            Perform a case-sensitive search. By default, fd uses case-insensitive searches, unless
-            the pattern contains an uppercase character (smart case).
+-a, --absolute-path
+        Shows the full path starting from the root as opposed to relative paths. The flag can be
+        overridden with --relative-path.
 
-    -i, --ignore-case
-            Perform a case-insensitive search. By default, fd uses case-insensitive searches, unless
-            the pattern contains an uppercase character (smart case).
+-l, --list-details
+        Use a detailed listing format like 'ls -l'. This is basically an alias for '--exec-batch
+        ls -l' with some additional 'ls' options. This can be used to see more metadata, to show
+        symlink targets and to achieve a deterministic sort order.
 
-    -g, --glob
-            Perform a glob-based search instead of a regular expression search.
+-L, --follow
+        By default, fd does not descend into symlinked directories. Using this flag, symbolic
+        links are also traversed. Flag can be overriden with --no-follow.
 
-        --regex
-            Perform a regular-expression based search (default). This can be used to override
-            --glob.
+-p, --full-path
+        By default, the search pattern is only matched against the filename (or directory name).
+        Using this flag, the pattern is matched against the full (absolute) path. Example:
+            fd --glob -p '**/.git/config'
 
-    -F, --fixed-strings
-            Treat the pattern as a literal string instead of a regular expression. Note that this
-            also performs substring comparison. If you want to match on an exact filename, consider
-            using '--glob'.
-
-    -a, --absolute-path
-            Shows the full path starting from the root as opposed to relative paths. The flag can be
-            overridden with --relative-path.
-
-    -l, --list-details
-            Use a detailed listing format like 'ls -l'. This is basically an alias for '--exec-batch
-            ls -l' with some additional 'ls' options. This can be used to see more metadata, to show
-            symlink targets and to achieve a deterministic sort order.
-
-    -L, --follow
-            By default, fd does not descend into symlinked directories. Using this flag, symbolic
-            links are also traversed. Flag can be overriden with --no-follow.
-
-    -p, --full-path
-            By default, the search pattern is only matched against the filename (or directory name).
-            Using this flag, the pattern is matched against the full (absolute) path. Example:
-              fd --glob -p '**/.git/config'
-
-    -0, --print0
-            Separate search results by the null character (instead of newlines). Useful for piping
-            results to 'xargs'.
+-0, --print0
+        Separate search results by the null character (instead of newlines). Useful for piping
+        results to 'xargs'.
 
     -d, --max-depth <depth>
             Limit the directory traversal to a given depth. By default, there is no limit on the

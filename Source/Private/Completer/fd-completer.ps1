@@ -5,6 +5,13 @@ $__fdCompletionsData = @(
         ShortName = '-H'
         FullName  = '--hidden'
         Tooltip   = 'Search hidden files and directories'
+
+        LongHelp = @'
+-H, --hidden
+        Include hidden directories and files in the search results (default: hidden files and
+        directories are skipped). Files and directories are considered to be hidden if their
+        name starts with a '.' sign (dot). The flag can be overridden with --no-hidden.
+'@
     }
     @{
         FullName  = '-1'
@@ -22,16 +29,49 @@ $__fdCompletionsData = @(
         ShortName = '-I'
         FullName  = '--no-ignore'
         Tooltip = 'Do not respect .(git|fd)ignore files'
+        LongHelp = @'
+-I, --no-ignore
+        Show search results from files and directories that would otherwise be ignored by
+        '.gitignore', '.ignore', '.fdignore', or the global ignore file. The flag can be
+        overridden with --ignore.
+'@
+
+    }
+    @{
+
+        FullName  = '--no-ignore-vcs'
+        Tooltip = 'Show results that are hidden from .gitignore files. Override with --ignore-vcs'
+        LongHelp = @'
+--no-ignore-vcs
+    Show search results from files and directories that would otherwise be ignored by
+    '.gitignore' files. The flag can be overridden with --ignore-vcs.
+'@
+    }
+    @{
+
+        FullName  = '--no-ignore-parent'
+        Tooltip = 'Show results that would be ignored by ''.gitignore'', ''.ignore'', or ''.fdignore'' files in parent directories.'
+        LongHelp = @'
+--no-ignore-parent
+    Show search results from files and directories that would otherwise be ignored by
+    '.gitignore', '.ignore', or '.fdignore' files in parent directories.
+'@
     }
     @{
         ShortName = '-s'
         FullName  = '--case-sensitive'
         ToolTip = 'Case-sensitive search (default: smart case)'
+        LongHelp = @'
+Perform a case-sensitive search. By default, fd uses case-insensitive searches, unless
+        the pattern contains an uppercase character (smart case).
+'@
     }
     @{
         ShortName = '-i'
         FullName  = '--ignore-case'
         ToolTip = 'Case-insensitive search (default: smart case)'
+        LongHelp = 'Perform a case-insensitive search. By default, fd uses case-insensitive searches, unless
+        the pattern contains an uppercase character (smart case).'
     }
     @{
         FullName  = '--ignore-file'
@@ -44,6 +84,11 @@ $__fdCompletionsData = @(
         ToolTip = 'Glob-based search (default: regular expression)'
         Url = '<link to glob syntax here...>'
 
+    }
+    @{
+        FullName  = '--regex'
+        ToolTip = 'Perform a regular-expression based search (default). This can be used to override
+        --glob'
     }
     @{
         ShortName = '-a'
@@ -94,6 +139,11 @@ $__fdCompletionsData = @(
         FullName  = '--show-errors'
         ToolTip = 'Enable the display of filesystem errors for situations such as insufficient permissions
             or dead symlinks.'
+    }
+    @{
+        ShortName = '-u'
+        FullName  = '--unrestricted'
+        ToolTip = 'Perform an unrestricted search, including ignored and hidden files. This is an alias for ''--no-ignore --hidden'' '
     }
     @{
         ShortName = '-X'
