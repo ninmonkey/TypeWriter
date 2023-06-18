@@ -1,4 +1,22 @@
+<#
+Note: `fd -h` prints a short and concise overview while `fd --help` gives all details.
 
+fd 8.4.0
+
+USAGE:
+    fd.exe [OPTIONS] [--] [pattern] [path]...
+
+ARGS:
+    <pattern>
+            the search pattern which is either a regular expression (default) or a glob pattern (if
+            --glob is used). If no pattern has been specified, every entry is considered a match. If
+            your pattern starts with a dash (-), make sure to pass '--' first, or it will be
+            considered as a flag (fd -- '-foo').
+
+    <path>...
+            The directory where the filesystem search is rooted (optional). If omitted, search the
+            current working directory.
+#>
 $__fdCompletionsData = @(
     # future: Type coerces into
     @{
@@ -94,33 +112,109 @@ Perform a case-sensitive search. By default, fd uses case-insensitive searches, 
         ShortName = '-a'
         FullName  = '--absolute-path'
         ToolTip = 'Show absolute instead of relative paths'
+        LongHelp= 'Shows the full path starting from the root as opposed to relative paths. The flag can be
+        overridden with --relative-path.'
+
+    }
+    @{
+        FullName  = '--prune'
+        ToolTip = 'Do not traverse into directories that match the search criteria. If you want to exclude             specific directories, use the ''--exclude=…'' option'
     }
     @{
         ShortName = '-l'
         FullName  = '--list-details'
         ToolTip = 'Use a long listing format with file metadata'
+        LongHelp = '  Use a detailed listing format like ''ls -l''. This is basically an alias for ''--exec-batch
+        ls -l'' with some additional ''ls'' options. This can be used to see more metadata, to show
+        symlink targets and to achieve a deterministic sort order.'
     }
     @{
         ShortName = '-L'
         FullName  = '--follow'
         ToolTip = 'Follow symbolic links'
+        LongHelp = 'By default, fd does not descend into symlinked directories. Using this flag, symbolic
+        links are also traversed. Flag can be overriden with --no-follow.'
     }
     @{
         ShortName = '-p'
         FullName  = '--full-path'
         ToolTip = 'Search full abs. path (default: filename only)'
+        LongHelp = ' By default, the search pattern is only matched against the filename (or directory name).
+        Using this flag, the pattern is matched against the full (absolute) path. Example:
+            fd --glob -p ''**/.git/config'''
     }
     @{
         ShortName = '-d'
         FullName  = '--max-depth'
-        ToolTip = 'Set maximum search depth (default: none)'
+        ToolTip = 'Limit the directory traversal to a given depth. By default, there is no limit on the
+            search depth. (default: none)'
         Rest      = ' <depth>'
     }
     @{
+        FullName  = '--min-depth'
+        ToolTip = 'Only show search results starting at the given depth. See also: ''--max-depth'' and
+            ''--exact-depth'''
+        Rest      = ' <depth>'
+    }
+    @{
+        FullName  = '--exact-depth'
+        ToolTip = 'Only show search results at the exact given depth. This is an alias for ''--min-depth
+            <depth> --max-depth <depth>''.'
+        Rest      = ' <depth>'
+    }
+    @{
+        ShortName = '-0'
+        FullName  = '--print0'
+        ToolTip = 'eparate search results by the null character (instead of newlines). Useful for piping
+        results to ''xargs''.'
+        # Rest      = ' <depth>'
+    }
+     @{
         ShortName = '-t'
         FullName  = '--type'
         ToolTip = 'Filter by type: file (f), directory (d), symlink (l),
                                        executable (x), empty (e), socket (s), pipe (p)'
+        Rest      = ' <filetype>'
+        LongHelp = '-t, --type <filetype>
+        Filter the search by type:
+            ''f'' or ''file'':         regular files
+            ''d'' or ''directory'':    directories
+            ''l'' or ''symlink'':      symbolic links
+            ''s'' or ''socket'':       socket
+            ''p'' or ''pipe'':         named pipe (FIFO)
+
+            ''x'' or ''executable'':   executables
+            ''e'' or ''empty'':        empty files or directories
+
+        This option can be specified more than once to include multiple file types. Searching
+        for ''--type file --type symlink'' will show both regular files as well as symlinks. Note
+        that the ''executable'' and ''empty'' filters work differently: ''--type executable'' implies
+        ''--type file'' by default. And ''--type empty'' searches for empty files and directories,
+        unless either ''--type file'' or ''--type directory'' is specified in addition.
+
+        Examples:
+            - Only search for files:
+                fd --type file …
+                fd -tf …
+            - Find both files and symlinks
+                fd --type file --type symlink …
+                fd -tf -tl …
+            - Find executable files:
+                fd --type executable
+                fd -tx
+            - Find empty files:
+                fd --type empty --type file
+                fd -te -tf
+            - Find empty directories:
+                fd --type empty --type directory
+                fd -te -td'
+    }
+     @{
+        ShortName = '-F'
+        FullName  = '--fixed-strings'
+        ToolTip = 'Treat the pattern as a literal string instead of a regular expression. Note that this
+        also performs substring comparison. If you want to match on an exact filename, consider
+        using ''--glob''.'
         Rest      = ' <filetype>'
     }
     @{
@@ -128,6 +222,10 @@ Perform a case-sensitive search. By default, fd uses case-insensitive searches, 
         FullName  = '--extension'
         ToolTip = 'Filter by file extension'
         Rest      = ' <ext>'
+        LongHelp = '(Additionally) filter search results by their file extension. Multiple allowable file
+            extensions can be specified.
+            If you want to search for files without extension, you can use the regex ''^[^.]+$'' as a
+            normal search pattern.'
     }
     @{
         ShortName = '-x'
