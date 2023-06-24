@@ -40,7 +40,7 @@ function newEventRecord {
     'tw.__getKeyNames' # 'tw.KeysOf'
     'tw.__getTypeNames' # 'tw.TypeOf'
     'Format-TypeWriterNormalizeLineEnding' # 'tw.Format-NormalizeLineEnding'
-
+    'Export-TypeCompleterCommandFdCompletions'
     #
     'New-TypeWriterCompletionResult' # 'tw.New-CompletionResult'
     # '*'

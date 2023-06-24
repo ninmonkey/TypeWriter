@@ -11,6 +11,7 @@ filter __gh_escapeStringWithSpecialChars {
 }
 
 [scriptblock]$__ghCompleterBlock = {
+    # do a total rewrite from scratch
     param(
             $WordToComplete,
             $CommandAst,
