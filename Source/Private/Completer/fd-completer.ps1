@@ -476,25 +476,24 @@ Allowed unit values:
     }
 )
 
+write-warning 'all funcs shhoudl abstract this'
 function __generateCompletions_fd {
     # not the cleanest, but generates two records if there is an alias, else 1
-    $GenerationModeNew = $false
-    if ($GenerationModeNew) {
-        write-warning 'may not quite work yet'
-        return $__fdCompletionsData | % {
-            [TWCompletionResult]::new( $_ ).AsCompletionResult()
+    # $GenerationModeNew = $false
+    # if ($GenerationModeNew) {
+    #     write-warning 'may not quite work yet'
+    #     return $__fdCompletionsData | % {
+    #         [TWCompletionResult]::new( $_ ).AsCompletionResult()
 
-            if ( -not [string]::IsNullOrWhiteSpace( $_.ShortName ) ) {
-                $hashAlias = [hashtable]::new( $_ )
-                $hashAlias.FullName = $hashAlias.ShortName
-                [TWCompletionResult]::new( $hashAlias ).AsCompletionResult()
-            }
-        }
-        return
-    }
-
-
-    if (-not $GenerationModeNew -and 'old conversion') {
+    #         if ( -not [string]::IsNullOrWhiteSpace( $_.ShortName ) ) {
+    #             $hashAlias = [hashtable]::new( $_ )
+    #             $hashAlias.FullName = $hashAlias.ShortName
+    #             [TWCompletionResult]::new( $hashAlias ).AsCompletionResult()
+    #         }
+    #     }
+    #     return
+    # }
+    if ($true -or -not $GenerationModeNew -and 'old conversion') {
         return $__fdCompletionsData | % {
             $record = $_
             $NewCompletionResultSplat = @{
@@ -512,7 +511,7 @@ function __generateCompletions_fd {
 
 }
 
-function Register-TypeCompleterCommandFdFind {
+function Register-TypeCompleterCommandFd {
     <#
     .SYNOPSIS
         completions to 'fd'
@@ -559,5 +558,3 @@ Change the current working directory of fd to the provided path. This means that
     }
     Register-ArgumentCompleter -Native -CommandName 'fd' -ScriptBlock $fd
 }
-
-$null = 0

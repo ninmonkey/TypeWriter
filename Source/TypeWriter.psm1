@@ -40,7 +40,7 @@ function newEventRecord {
     'tw.__getKeyNames' # 'tw.KeysOf'
     'tw.__getTypeNames' # 'tw.TypeOf'
     'Format-TypeWriterNormalizeLineEnding' # 'tw.Format-NormalizeLineEnding'
-    'Export-TypeCompleterCommandFdCompletions'
+    'Export-TypeCompleterCommandCompletions' # 'Export-TypeCompleterCommandCompletions' = { 'tw.Export-CommandCompletions', 'Export-TwCommandCompletions' }
     #
     'New-TypeWriterCompletionResult' # 'tw.New-CompletionResult'
     # '*'
@@ -53,6 +53,8 @@ function newEventRecord {
     'tw.Format-NormalizeLineEnding' # 'Format-TypeWriterNormalizeLineEnding'
     #
     'tw.New-CompletionResult' # 'New-TypeWriterCompletionResult'
+    'tw.Export-CommandCompletions'# 'Export-TypeCompleterCommandCompletions' = { 'tw.Export-CommandCompletions', 'Export-TwCommandCompletions' }
+    'Export-TwCommandCompletions' # 'Export-TypeCompleterCommandCompletions' = { 'tw.Export-CommandCompletions', 'Export-TwCommandCompletions' }
     # '*'
 )
 
@@ -135,7 +137,7 @@ Foreach ($FolderItem in 'Private', 'Public') {
     tw.Render.CompleterName -Command 'fd'
         | Write-Information -infa 'Continue'
 
-    Register-TypeCompleterCommandFdFind
+    Register-TypeCompleterCommandFd
 
 
 }

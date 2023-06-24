@@ -2,6 +2,12 @@ $error.Count
 err -Clear -ShowCount
 $Harness = @{
     ImportModeLocal = $true
+    Path = @{
+        PSScriptRoot = $PSScriptRoot
+        PSCommandPath = $PSCommandPath
+        ExportRoot = (Join-Path $PSScriptRoot 'Export')
+        # SourcePath = (Join-Path $PSScriptRoot 'Source')
+    }
 }
 
 Push-Location -StackName 'db_harness' -Path .
@@ -63,17 +69,57 @@ get-module Typewriter -All
     | .Fmt.Module
 # | fl
 
+
+
+
+write-warning 'next: basic SAM completions'
+
+if($false) {
+
+    # Import-Module ImportExcel -ea 'stop' -PassThru
+    Import-Module ExcelAnt -Force -ea 'stop'  -PassThru | Join-String { $_.Name, $_.Version -join ' =  ' }
+    Get-ExcelAntConfig|json
+    $XantConf = Get-ExcelAntConfig
+    $XantConf.Path.ExportTempFolder = 'g:\temp\xl'
+    Set-ExcelAntConfig $xAntConf -Verbose
+    return
+}
+. {
+    $toExport = Join-path $Harness.Path.ExportRoot 'Completions' 'fd-typeWriter-Completions.xlsx'
+    $parent = $toExport | Split-Path
+    mkdir $parent -ea 'ignore'
+
+    $Pkg = Open-ExcelPackage #-Path $toExport -Create
+    $exportExcelSplat = @{
+        PassThru = $true
+        TableName = 'Completions_table'
+        Title = "'fd' command completions"
+        WorksheetName = 'Completions List'
+        TableStyle = 'Light2'
+        Verbose = $true
+    }
+
+    $pkg =
+        @(
+            gci .
+        ) | Export-Excel $Pkg @exportExcelSplat
+
+    # $toExport | Join-String -f 'excel: {0}'
+    $Pkg.File | Join-String -f 'excel: pkg. open {0}'
+
+    write-warning 'wait, '
+    $Pkg.File | Join-String -f 'excel: pkg. open {0}' | write-warning
+    $toExport | Join-String -f 'excel: toExport {0}'  | write-warning
+    Close-ExcelPackage -ExcelPackage $Pkg -Show -verbose -SaveAs $toExport
+    $Pkg.File | Join-String -f 'excel: pkg. closed {0}'
+    $toExport | Join-String -f 'excel: toExport {0}'
+}
 return
 
 
 $PSStyle.OutputRendering = 'Ansi' # 'Ansi' | 'Host' | 'NoOutput' | 'PlainText'
 # . (gi -ea stop 'Examples/foo.ps1')
 
-$Harness = @{
-    ImportMode = 'SourcePath' # [ SourcePath | OutputPath ]
-    OutputPath = (Join-Path $PSScriptRoot 'Output')
-    SourcePath = (Join-Path $PSScriptRoot 'Source')
-}
 # $Harness.ImportMode = 'OutputPath'
 # $Harness.CurImportFullpath = (Join-Path $Harness.($Harness.ImportMode) 'TypeWriter')
 # impo (Join-Path $Harness.OutputPath TypeWriter) -Force -Verbose
@@ -102,12 +148,10 @@ therefore
 . 'H:\data\2023\pwsh\PsModules\TypeWriter\Source\Private\Completer\sam-top-level-completer.ps1'
 #>
 
-
-
 Pop-Location -StackName 'db_harness' ; return
 
 
-
+pwd
 
 
 
