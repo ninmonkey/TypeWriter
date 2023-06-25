@@ -21,3 +21,21 @@ github clone url --branch branchName
 github <path>
 github open <path>
 ```
+
+## ask
+
+```ps1
+'can I get completions to act as a pass-thru 
+   like % and ?  can? ex'
+
+# completes
+    gcm -m ImportExcel 
+    #| CountOf
+    | ?{ $true } 
+    | ?{ $_.<menuComplete>
+
+# cannot complete
+    gcm -m ImportExcel 
+    | CountOf    
+    | ?{ $_.<menuComplete>
+```

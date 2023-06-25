@@ -1,5 +1,8 @@
+$PSStyle.OutputRendering = 'Ansi' # 'Ansi' | 'Host' | 'NoOutput' | 'PlainText'
 $error.Count
+
 err -Clear -ShowCount
+
 $Harness = @{
     ImportModeLocal = $true
     Path = @{
@@ -9,15 +12,47 @@ $Harness = @{
         # SourcePath = (Join-Path $PSScriptRoot 'Source')
     }
     Using = @{
-        VerboseDefaultForImportExcel = $true
+        # VerboseDefaultForImportExcel = $false
+        VerboseExplicitlyForAll = $true
     }
 }
-if($Harness.Using.VerboseDefaultForImportExcel) {
-    $PSDefaultParameterValues['Export-Excel:Verbose'] = $true
-    $PSDefaultParameterValues['Close-ExcelPackage:Verbose'] = $true
-    $PSDefaultParameterValues['Open-ExcelPackage:Verbose'] = $true
 
-}
+
+
+ gcm -m ImportExcel
+    | ? CommandType -eq 'function'
+    | Sort-Object -Unique
+    | %{
+        $keyName = "{0}:Verbose" -f $_.Name
+        $keyName | Join-String -f 'add/remove key: "{0}"' -sep "`n"
+                 | write-verbose
+        if($Harness.Using.VerboseExplicitlyForAll) {
+            $PSDefaultParameterValues[ $keyName ] = $true
+        } else {
+            $PSDefaultParameterValues.
+                Remove( $keyName )
+        }
+    }
+
+    $PSDefaultParameterValues.
+        GetEnumerator()
+        | Sort-Object Name
+        | OutNull 'DefaultParams'
+
+
+
+# if($Harness.Using.VerboseExplicitlyForAll) {
+#     gcm -m ImportExcel | ? CommandType -eq 'function' | %{
+#     $keyName = "{0}:Verbose" -f $_.Name
+#     $keyName
+#     } | Sort-Object -Unique
+# }
+# if($Harness.Using.VerboseDefaultForImportExcel) {
+#     $PSDefaultParameterValues['Export-Excel:Verbose'] = $true
+#     $PSDefaultParameterValues['Close-ExcelPackage:Verbose'] = $true
+#     $PSDefaultParameterValues['Open-ExcelPackage:Verbose'] = $true
+
+# }
 
 Push-Location -StackName 'db_harness' -Path .
 # Import-Module '../TypeWriter' -Force
@@ -136,6 +171,14 @@ if($false) {
 
 }
 return
+   'left off:
+        1: resort worksheet order (fd first)
+        2: resort column order (long ones last)
+        3: autosize, with max width (or just autosize, then width pass to clamp it in [Clamp])
+        4: that format that wraps long cells
+        5: check for errors, like multiple completions for a distinct value
+    '
+    throw 'left off'
 
 
 $PSStyle.OutputRendering = 'Ansi' # 'Ansi' | 'Host' | 'NoOutput' | 'PlainText'
