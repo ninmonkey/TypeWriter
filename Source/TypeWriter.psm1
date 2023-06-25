@@ -131,6 +131,7 @@ Foreach ($FolderItem in 'Private', 'Public') {
         }
     }
 
+    # todo: automate
     # Hardcoded native completers
     'Loading Arg Completers...' | Write-Verbose
 
@@ -138,6 +139,11 @@ Foreach ($FolderItem in 'Private', 'Public') {
         | Write-Information -infa 'Continue'
 
     Register-TypeCompleterCommandFd
+
+    tw.Render.CompleterName -Command 'Github'
+        | Write-Information -infa 'Continue'
+
+    Register-TypeCompleterCommandGithub
 
 
 }

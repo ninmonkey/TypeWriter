@@ -12,6 +12,13 @@ function Export-TypeCompleterCommandCompletions {
         Export-TypeCompleterCommandCompletions
     .LINK
         __generateCompletions_fd
+    .EXAMPLE
+        Tw.Export-CommandCompletions github
+    .EXAMPLE
+        # slight variations
+        Tw.Export-CommandCompletions github | Json | Json.from
+        Tw.Export-CommandCompletions github -RawOutput
+        Tw.Export-CommandCompletions github -RawOutput | Json | Json.From
 
     #>
     [Alias(

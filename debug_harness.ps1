@@ -8,6 +8,15 @@ $Harness = @{
         ExportRoot = (Join-Path $PSScriptRoot 'Export')
         # SourcePath = (Join-Path $PSScriptRoot 'Source')
     }
+    Using = @{
+        VerboseDefaultForImportExcel = $true
+    }
+}
+if($Harness.Using.VerboseDefaultForImportExcel) {
+    $PSDefaultParameterValues['Export-Excel:Verbose'] = $true
+    $PSDefaultParameterValues['Close-ExcelPackage:Verbose'] = $true
+    $PSDefaultParameterValues['Open-ExcelPackage:Verbose'] = $true
+
 }
 
 Push-Location -StackName 'db_harness' -Path .
@@ -89,30 +98,42 @@ if($false) {
     $parent = $toExport | Split-Path
     mkdir $parent -ea 'ignore'
 
-    $Pkg = Open-ExcelPackage #-Path $toExport -Create
+    remove-item $ToExport -ea 'ignore'
+    $Pkg = Open-ExcelPackage -Path $toExport -Create -ea 'stop'
     $exportExcelSplat = @{
-        PassThru = $true
-        TableName = 'Completions_table'
-        Title = "'fd' command completions"
-        WorksheetName = 'Completions List'
-        TableStyle = 'Light2'
-        Verbose = $true
+        Verbose       = $true
+        AutoSize      = $true
+        PassThru      = $true
+        TableStyle    = 'Light2'
     }
 
+
+    $Sheet_splat = @{
+        TableName     = 'fd_table'
+        WorksheetName = 'fd'
+        Title         = "'fd' command completions"
+    }
     $pkg =
-        @(
-            gci .
-        ) | Export-Excel $Pkg @exportExcelSplat
+        Tw.Export-CommandCompletions 'fd'
+        | Export-Excel -ExcelP $Pkg @exportExcelSplat @Sheet_splat
+
+    $Sheet_splat = @{
+        TableName     = 'Github_table'
+        WorksheetName = 'Github'
+        Title         = "'github' command completions"
+    }
+    $pkg =
+        Tw.Export-CommandCompletions 'github'
+        | Export-Excel -ExcelP $Pkg @exportExcelSplat @Sheet_splat
+
 
     # $toExport | Join-String -f 'excel: {0}'
-    $Pkg.File | Join-String -f 'excel: pkg. open {0}'
-
-    write-warning 'wait, '
+    # $Pkg.File | Join-String -f 'excel: pkg. open {0}'
     $Pkg.File | Join-String -f 'excel: pkg. open {0}' | write-warning
-    $toExport | Join-String -f 'excel: toExport {0}'  | write-warning
+    $toExport | Join-String -f 'excel: toExport {0}'  | write-verbose -verbose
     Close-ExcelPackage -ExcelPackage $Pkg -Show -verbose -SaveAs $toExport
-    $Pkg.File | Join-String -f 'excel: pkg. closed {0}'
-    $toExport | Join-String -f 'excel: toExport {0}'
+
+
 }
 return
 
