@@ -145,6 +145,11 @@ Foreach ($FolderItem in 'Private', 'Public') {
 
     Register-TypeCompleterCommandGithub
 
+    tw.Render.CompleterName -Command 'Tsc'
+        | Write-Information -infa 'Continue'
+
+    Register-TypeCompleterCommandTsc
+
 
 }
 
