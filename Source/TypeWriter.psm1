@@ -7,6 +7,7 @@ $__buildCfg = @{
 $script:__moduleInfo = @{
     Files = [Collections.Generic.List[Object]]::new()
 }
+$script:__twAlwaysBreakInCompleterState = $false
 class newModuleEvent {
     [string]$Label
     [object]$Data
@@ -36,6 +37,14 @@ function newEventRecord {
     # 'Get-RandomExcelAntColor'
     # 'xl.Errors.Inspect'
     #
+
+    'Log-TypeWriterNativeArgumentCompleterState' # 'Log-TypeWriterNativeArgumentCompleterState' = { 'tw.Log.NativeArgumentCompleterState' }
+    'Log-TypeWriterArgumentCompleterState' # 'Log-TypeWriterArgumentCompleterState' = { 'tw.Log.ArgumentCompleterState' }
+
+
+    'tw.Log.ArgumentCompleterState' # 'tw.Log.ArgumentCompleterState' = { <none> }
+    'tw.Log.NativeArgumentCompleterState' # 'tw.Log.NativeArgumentCompleterState' = { <none> }
+    #
     'Render-TypeWriterArgumentCompleterName' # 'tw.Render.CompleterName'
     'tw.__getKeyNames' # 'tw.KeysOf'
     'tw.__getTypeNames' # 'tw.TypeOf'
@@ -45,7 +54,12 @@ function newEventRecord {
     'New-TypeWriterCompletionResult' # 'tw.New-CompletionResult'
     # '*'
 )
+[Collections.Generic.List[Object]]$HardcodedToExportVariable = @(
+    '__twAlwaysBreakInCompleterState' # 'tw.Log.NativeArgumentCompleterState'
+)
 [Collections.Generic.List[Object]]$HardcodedToExportAlias = @(
+    'tw.Log.ArgumentCompleterState' # 'Log-TypeWriterNativeArgumentCompleterState' = { 'tw.Log. NativeArgumentCompleterState' }
+    'tw.Log.NativeArgumentCompleterState' # 'Log-TypeWriterArgumentCompleterState' = { 'tw.Log. ArgumentCompleterState' }
     #
     'tw.KeysOf' # 'tw.__getKeyNames'
     'tw.Render.CompleterName' # 'Render-TypeWriterArgumentCompleterName'
@@ -113,6 +127,11 @@ Foreach ($FolderItem in 'Private', 'Public') {
         if($ToExportFunc.count -gt 0) {
             Export-ModuleMember -Function @(
                 $ToExportFunc
+            )
+        }
+        if($ToExportVariable.count -gt 0) {
+            Export-ModuleMember -Variable @(
+                $ToExportVariable
             )
         }
 

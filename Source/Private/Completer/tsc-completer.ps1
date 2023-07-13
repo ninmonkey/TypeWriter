@@ -652,6 +652,15 @@ function Register-TypeCompleterCommandtsc {
     $cmdScriptBlock = {
         param($wordToComplete, $commandAst, $cursorPosition)
 
+        $logState_splat = @{
+            wordToComplete = $wordToComplete
+            commandAst = $commandAst
+            cursorPosition = $cursorPosition
+            ExtraInfo = @{}
+        }
+
+        tw.Log.NativeArgumentCompleterState @logState_splat
+
         return [Collections.Generic.List[Object]]$GeneratedCompletions = @(
             __generateCompletions_tsc
         ) | Sort-Object CompletionText
